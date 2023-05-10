@@ -11,6 +11,10 @@ type AccountService struct {
 
 func (a *AccountService) Create(documentNumber string) (models.AccountInterface, error) {
 	account := models.NewAccount(documentNumber)
+	err := account.IsValid()
+	if err != nil {
+		return nil, err
+	}
 
 	return a.AccountRepository.Create(account)
 }

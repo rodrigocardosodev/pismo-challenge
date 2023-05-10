@@ -19,7 +19,7 @@ type AccountInterface interface {
 }
 
 type Account struct {
-	ID             int64  `json:"id" valid:"required"`
+	ID             int64  `json:"id" valid:"-"`
 	DocumentNumber string `json:"document_number" valid:"required"`
 	Amount         int64  `json:"amount" valid:"-"`
 }

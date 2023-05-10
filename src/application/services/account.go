@@ -18,3 +18,9 @@ func (a *AccountService) Create(documentNumber string) (models.AccountInterface,
 func (a *AccountService) GetByID(id int64) (models.AccountInterface, error) {
 	return a.AccountRepository.GetByID(id)
 }
+
+func NewAccountService(accountRepository ports.IAccountRepository) *AccountService {
+	return &AccountService{
+		AccountRepository: accountRepository,
+	}
+}

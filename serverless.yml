@@ -1,0 +1,40 @@
+service: pismo-challenge
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: dev
+  region: sa-east-1
+  architecture: arm64 # My desktop is Mac M1, if you want to run on x86, remove this line
+  environment:
+    PG_HOST: ${env:PG_HOST}
+    PG_PORT: ${env:PG_PORT}
+    PG_USER: ${env:PG_USER}
+    PG_PASSWORD: ${env:PG_PASSWORD}
+    PG_DATABASE: ${env:PG_DATABASE}
+
+
+functions:
+  post-account:
+    handler: bin/post-account
+    events:
+      - http:
+          path: /accounts
+          method: post
+  get-account:
+    handler: bin/get-account
+    events:
+      - http:
+          path: /accounts/{id}
+          method: get
+  post-transaction:
+    handler: bin/post-transaction
+    events:
+      - http:
+          path: /transactions
+          method: post
+
+plugins:
+  - serverless-offline

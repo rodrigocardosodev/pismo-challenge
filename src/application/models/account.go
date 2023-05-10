@@ -15,10 +15,11 @@ type AccountInterface interface {
 	GetAmount() int64
 	SetAmount(int64)
 	SetID(int64)
+	IsValid() error
 }
 
 type Account struct {
-	ID             int64  `json:"id" valid:"required"`
+	ID             int64  `json:"id" valid:"-"`
 	DocumentNumber string `json:"document_number" valid:"required"`
 	Amount         int64  `json:"amount" valid:"-"`
 }
@@ -43,8 +44,13 @@ func (a *Account) SetID(id int64) {
 	a.ID = id
 }
 
-func (a *Account) ValidateDocumentNumber() error {
+func (a *Account) IsValid() error {
 	err := utils.IsValidCPF(a.DocumentNumber)
+	if err != nil {
+		return err
+	}
+
+	_, err = govalidator.ValidateStruct(a)
 	if err != nil {
 		return err
 	}

@@ -75,6 +75,20 @@ func (mr *MockAccountInterfaceMockRecorder) GetID() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetID", reflect.TypeOf((*MockAccountInterface)(nil).GetID))
 }
 
+// IsValid mocks base method.
+func (m *MockAccountInterface) IsValid() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "IsValid")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// IsValid indicates an expected call of IsValid.
+func (mr *MockAccountInterfaceMockRecorder) IsValid() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsValid", reflect.TypeOf((*MockAccountInterface)(nil).IsValid))
+}
+
 // SetAmount mocks base method.
 func (m *MockAccountInterface) SetAmount(arg0 int64) {
 	m.ctrl.T.Helper()

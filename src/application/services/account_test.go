@@ -35,7 +35,10 @@ func TestAccountService_Create(t *testing.T) {
 
 	service := services.NewAccountService(repository)
 
-	result, err := service.Create("123456789")
+	result, err := service.Create("557.242.030-14")
 	require.Nil(t, err)
 	require.Equal(t, account, result)
+
+	_, err = service.Create("123.456.789-02")
+	require.Equal(t, "cpf inválido", err.Error())
 }

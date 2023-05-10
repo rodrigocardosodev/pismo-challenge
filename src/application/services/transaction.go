@@ -21,6 +21,7 @@ func (t *TransactionService) Create(accountId int64, operationId int, amount int
 	if err != nil {
 		return nil, err
 	}
+
 	if operationId == models.SAQUE || operationId == models.COMPRA_A_VISTA {
 		transaction.SetAmount(-amount)
 	}

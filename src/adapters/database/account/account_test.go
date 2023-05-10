@@ -1,4 +1,4 @@
-package database_test
+package account_test
 
 import (
 	"database/sql"
@@ -6,16 +6,16 @@ import (
 	"testing"
 
 	_ "github.com/mattn/go-sqlite3" // Import SQLite3 driver
-	"github.com/rodrigocardosodev/pismo-challenge/src/adapters/database"
+	database "github.com/rodrigocardosodev/pismo-challenge/src/adapters/database/account"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 	"github.com/stretchr/testify/require"
 )
 
-var Db *sql.DB
+var accountDb *sql.DB
 
 func initDB() {
 	var err error
-	Db, err = sql.Open("sqlite3", "file::memory:?cache=shared")
+	accountDb, err = sql.Open("sqlite3", "file::memory:?cache=shared")
 	if err != nil {
 		log.Fatal("Failed to initialize database:", err.Error())
 	}
@@ -23,7 +23,7 @@ func initDB() {
 
 func setUp() {
 	initDB()
-	createTable(Db)
+	createTable(accountDb)
 }
 
 func tearDown(db *sql.DB) {
@@ -62,10 +62,10 @@ func createAccount(db *sql.DB) {
 
 func TestAccountRepository_GetById(t *testing.T) {
 	setUp()
-	createAccount(Db)
-	defer tearDown(Db)
+	createAccount(accountDb)
+	defer tearDown(accountDb)
 
-	accountDb := database.NewAccountRepository(Db)
+	accountDb := database.NewAccountRepository(accountDb)
 	account, err := accountDb.GetByID(1)
 	require.Nil(t, err)
 	require.Equal(t, int64(1), account.GetID())
@@ -75,26 +75,13 @@ func TestAccountRepository_GetById(t *testing.T) {
 
 func TestAccountRepository_Create(t *testing.T) {
 	setUp()
-	defer tearDown(Db)
+	defer tearDown(accountDb)
 
 	account := models.NewAccount("55724203014")
-	accountDb := database.NewAccountRepository(Db)
+	accountDb := database.NewAccountRepository(accountDb)
 	account, err := accountDb.Create(account)
 	require.Nil(t, err)
 	require.Equal(t, int64(1), account.GetID())
 	require.Equal(t, "55724203014", account.GetDocumentNumber())
 	require.Equal(t, int64(0), account.GetAmount())
-}
-
-func TestAccountRepository_UpdateAmount(t *testing.T) {
-	setUp()
-	createAccount(Db)
-	defer tearDown(Db)
-
-	accountDb := database.NewAccountRepository(Db)
-	account, err := accountDb.UpdateAmount(1, 2000)
-	require.Nil(t, err)
-	require.Equal(t, int64(1), account.GetID())
-	require.Equal(t, "55724203014", account.GetDocumentNumber())
-	require.Equal(t, int64(2000), account.GetAmount())
 }

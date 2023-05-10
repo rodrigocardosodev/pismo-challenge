@@ -1,4 +1,4 @@
-package database
+package account
 
 import (
 	"database/sql"
@@ -29,22 +29,6 @@ func (a *AccountRepository) Create(account models.AccountInterface) (models.Acco
 	}
 
 	account.SetID(id)
-
-	return account, nil
-}
-
-func (a *AccountRepository) UpdateAmount(id int64, amount int64) (models.AccountInterface, error) {
-	account, err := a.GetByID(id)
-	if err != nil {
-		return nil, err
-	}
-
-	account.SetAmount(amount)
-
-	_, err = a.DB.Exec("UPDATE accounts SET amount = $1 WHERE id = $2", account.GetAmount(), account.GetID())
-	if err != nil {
-		return nil, err
-	}
 
 	return account, nil
 }

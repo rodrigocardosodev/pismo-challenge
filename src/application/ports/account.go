@@ -10,7 +10,6 @@ type IAccountReader interface {
 
 type IAccountWriter interface {
 	Create(account models.AccountInterface) (models.AccountInterface, error)
-	UpdateAmount(id int64, amount int64) (models.AccountInterface, error)
 }
 
 type IAccountRepository interface {

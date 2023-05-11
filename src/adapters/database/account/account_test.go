@@ -1,6 +1,7 @@
 package account_test
 
 import (
+	"context"
 	"database/sql"
 	"log"
 	"testing"
@@ -64,9 +65,10 @@ func TestAccountRepository_GetById(t *testing.T) {
 	setUp()
 	createAccount(accountDb)
 	defer tearDown(accountDb)
+	ctx := context.Background()
 
 	accountDb := database.NewAccountRepository(accountDb)
-	account, err := accountDb.GetByID(1)
+	account, err := accountDb.GetByID(ctx, 1)
 	require.Nil(t, err)
 	require.Equal(t, int64(1), account.GetID())
 	require.Equal(t, "55724203014", account.GetDocumentNumber())
@@ -76,10 +78,11 @@ func TestAccountRepository_GetById(t *testing.T) {
 func TestAccountRepository_Create(t *testing.T) {
 	setUp()
 	defer tearDown(accountDb)
+	ctx := context.Background()
 
 	account := models.NewAccount("55724203014")
 	accountDb := database.NewAccountRepository(accountDb)
-	account, err := accountDb.Create(account)
+	account, err := accountDb.Create(ctx, account)
 	require.Nil(t, err)
 	require.Equal(t, int64(1), account.GetID())
 	require.Equal(t, "55724203014", account.GetDocumentNumber())

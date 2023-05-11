@@ -1,6 +1,7 @@
 package services_test
 
 import (
+	"context"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -14,14 +15,15 @@ import (
 func TestTransactionService_Create(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
+	ctx := context.Background()
 
 	transaction := mock_models.NewMockTransactionInterface(ctrl)
 	repository := mock_ports.NewMockITransactionRepository(ctrl)
-	repository.EXPECT().Create(gomock.Any()).Return(transaction, nil)
+	repository.EXPECT().Create(ctx, gomock.Any()).Return(transaction, nil)
 
 	service := services.NewTransactionService(repository)
 
-	result, err := service.Create(1, models.PAGAMENTO, 1000)
+	result, err := service.Create(ctx, 1, models.PAGAMENTO, 1000)
 	require.Nil(t, err)
 	require.Equal(t, transaction, result)
 }

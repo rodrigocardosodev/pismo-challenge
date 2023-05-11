@@ -33,6 +33,20 @@ func (m *MockTransactionInterface) EXPECT() *MockTransactionInterfaceMockRecorde
 	return m.recorder
 }
 
+// GetAccountID mocks base method.
+func (m *MockTransactionInterface) GetAccountID() int64 {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAccountID")
+	ret0, _ := ret[0].(int64)
+	return ret0
+}
+
+// GetAccountID indicates an expected call of GetAccountID.
+func (mr *MockTransactionInterfaceMockRecorder) GetAccountID() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAccountID", reflect.TypeOf((*MockTransactionInterface)(nil).GetAccountID))
+}
+
 // GetAmount mocks base method.
 func (m *MockTransactionInterface) GetAmount() int64 {
 	m.ctrl.T.Helper()
@@ -61,6 +75,20 @@ func (mr *MockTransactionInterfaceMockRecorder) GetID() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetID", reflect.TypeOf((*MockTransactionInterface)(nil).GetID))
 }
 
+// GetOperationTypeId mocks base method.
+func (m *MockTransactionInterface) GetOperationTypeId() int64 {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetOperationTypeId")
+	ret0, _ := ret[0].(int64)
+	return ret0
+}
+
+// GetOperationTypeId indicates an expected call of GetOperationTypeId.
+func (mr *MockTransactionInterfaceMockRecorder) GetOperationTypeId() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOperationTypeId", reflect.TypeOf((*MockTransactionInterface)(nil).GetOperationTypeId))
+}
+
 // IsValid mocks base method.
 func (m *MockTransactionInterface) IsValid() error {
 	m.ctrl.T.Helper()
@@ -87,6 +115,18 @@ func (mr *MockTransactionInterfaceMockRecorder) SetAmount(arg0 interface{}) *gom
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetAmount", reflect.TypeOf((*MockTransactionInterface)(nil).SetAmount), arg0)
 }
 
+// SetEventDate mocks base method.
+func (m *MockTransactionInterface) SetEventDate(arg0 string) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetEventDate", arg0)
+}
+
+// SetEventDate indicates an expected call of SetEventDate.
+func (mr *MockTransactionInterfaceMockRecorder) SetEventDate(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetEventDate", reflect.TypeOf((*MockTransactionInterface)(nil).SetEventDate), arg0)
+}
+
 // SetID mocks base method.
 func (m *MockTransactionInterface) SetID(arg0 int64) {
 	m.ctrl.T.Helper()
@@ -97,4 +137,16 @@ func (m *MockTransactionInterface) SetID(arg0 int64) {
 func (mr *MockTransactionInterfaceMockRecorder) SetID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetID", reflect.TypeOf((*MockTransactionInterface)(nil).SetID), arg0)
+}
+
+// SetOperationTypeId mocks base method.
+func (m *MockTransactionInterface) SetOperationTypeId(arg0 int64) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetOperationTypeId", arg0)
+}
+
+// SetOperationTypeId indicates an expected call of SetOperationTypeId.
+func (mr *MockTransactionInterfaceMockRecorder) SetOperationTypeId(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetOperationTypeId", reflect.TypeOf((*MockTransactionInterface)(nil).SetOperationTypeId), arg0)
 }

@@ -14,7 +14,7 @@ type AccountRepository struct {
 
 func (a *AccountRepository) GetByID(ctx context.Context, id int64) (models.AccountInterface, error) {
 	var account models.Account
-	err := a.DB.QueryRowContext(ctx, "SELECT id, document_number, amount FROM accounts WHERE id = $1", id).Scan(&account.ID, &account.DocumentNumber, &account.Amount)
+	err := a.DB.QueryRowContext(ctx, "SELECT id, document_number FROM accounts WHERE id = $1", id).Scan(&account.ID, &account.DocumentNumber)
 	if err != nil {
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func (a *AccountRepository) GetByID(ctx context.Context, id int64) (models.Accou
 
 func (a *AccountRepository) Create(ctx context.Context, account models.AccountInterface) (models.AccountInterface, error) {
 	var id int64
-	err := a.DB.QueryRowContext(ctx, "INSERT INTO accounts (document_number, amount) VALUES ($1, $2) RETURNING id", account.GetDocumentNumber(), account.GetAmount()).Scan(&id)
+	err := a.DB.QueryRowContext(ctx, "INSERT INTO accounts (document_number) VALUES ($1) RETURNING id", account.GetDocumentNumber()).Scan(&id)
 	if err != nil {
 		return nil, err
 	}

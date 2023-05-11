@@ -12,8 +12,6 @@ func init() {
 type AccountInterface interface {
 	GetID() int64
 	GetDocumentNumber() string
-	GetAmount() int64
-	SetAmount(int64)
 	SetID(int64)
 	IsValid() error
 }
@@ -21,7 +19,6 @@ type AccountInterface interface {
 type Account struct {
 	ID             int64  `json:"id" valid:"-"`
 	DocumentNumber string `json:"document_number" valid:"required"`
-	Amount         int64  `json:"amount" valid:"-"`
 }
 
 func (a *Account) GetID() int64 {
@@ -30,14 +27,6 @@ func (a *Account) GetID() int64 {
 
 func (a *Account) GetDocumentNumber() string {
 	return a.DocumentNumber
-}
-
-func (a *Account) GetAmount() int64 {
-	return a.Amount
-}
-
-func (a *Account) SetAmount(amount int64) {
-	a.Amount = amount
 }
 
 func (a *Account) SetID(id int64) {
@@ -61,6 +50,5 @@ func (a *Account) IsValid() error {
 func NewAccount(documentNumber string) AccountInterface {
 	return &Account{
 		DocumentNumber: documentNumber,
-		Amount:         0,
 	}
 }

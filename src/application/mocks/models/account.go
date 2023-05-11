@@ -33,20 +33,6 @@ func (m *MockAccountInterface) EXPECT() *MockAccountInterfaceMockRecorder {
 	return m.recorder
 }
 
-// GetAmount mocks base method.
-func (m *MockAccountInterface) GetAmount() int64 {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetAmount")
-	ret0, _ := ret[0].(int64)
-	return ret0
-}
-
-// GetAmount indicates an expected call of GetAmount.
-func (mr *MockAccountInterfaceMockRecorder) GetAmount() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAmount", reflect.TypeOf((*MockAccountInterface)(nil).GetAmount))
-}
-
 // GetDocumentNumber mocks base method.
 func (m *MockAccountInterface) GetDocumentNumber() string {
 	m.ctrl.T.Helper()
@@ -87,18 +73,6 @@ func (m *MockAccountInterface) IsValid() error {
 func (mr *MockAccountInterfaceMockRecorder) IsValid() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsValid", reflect.TypeOf((*MockAccountInterface)(nil).IsValid))
-}
-
-// SetAmount mocks base method.
-func (m *MockAccountInterface) SetAmount(arg0 int64) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetAmount", arg0)
-}
-
-// SetAmount indicates an expected call of SetAmount.
-func (mr *MockAccountInterfaceMockRecorder) SetAmount(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetAmount", reflect.TypeOf((*MockAccountInterface)(nil).SetAmount), arg0)
 }
 
 // SetID mocks base method.

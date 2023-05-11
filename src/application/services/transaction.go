@@ -1,6 +1,8 @@
 package services
 
 import (
+	"context"
+
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/ports"
 )
@@ -15,7 +17,7 @@ func NewTransactionService(transactionRepository ports.ITransactionRepository) *
 	}
 }
 
-func (t *TransactionService) Create(accountId int64, operationId int, amount int64) (models.TransactionInterface, error) {
+func (t *TransactionService) Create(ctx context.Context, accountId int64, operationId int, amount int64) (models.TransactionInterface, error) {
 	transaction := models.NewTransaction(accountId, operationId, amount)
 	err := transaction.IsValid()
 	if err != nil {
@@ -30,7 +32,7 @@ func (t *TransactionService) Create(accountId int64, operationId int, amount int
 		transaction.SetAmount(amount)
 	}
 
-	transaction, err = t.TransactionRepository.Create(transaction)
+	transaction, err = t.TransactionRepository.Create(ctx, transaction)
 	if err != nil {
 		return nil, err
 	}

@@ -5,6 +5,7 @@
 package mock_ports
 
 import (
+	context "context"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
@@ -35,18 +36,18 @@ func (m *MockITransactionWriter) EXPECT() *MockITransactionWriterMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockITransactionWriter) Create(Transaction models.TransactionInterface) (models.TransactionInterface, error) {
+func (m *MockITransactionWriter) Create(ctx context.Context, Transaction models.TransactionInterface) (models.TransactionInterface, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", Transaction)
+	ret := m.ctrl.Call(m, "Create", ctx, Transaction)
 	ret0, _ := ret[0].(models.TransactionInterface)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockITransactionWriterMockRecorder) Create(Transaction interface{}) *gomock.Call {
+func (mr *MockITransactionWriterMockRecorder) Create(ctx, Transaction interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITransactionWriter)(nil).Create), Transaction)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITransactionWriter)(nil).Create), ctx, Transaction)
 }
 
 // MockITransactionRepository is a mock of ITransactionRepository interface.
@@ -73,16 +74,16 @@ func (m *MockITransactionRepository) EXPECT() *MockITransactionRepositoryMockRec
 }
 
 // Create mocks base method.
-func (m *MockITransactionRepository) Create(Transaction models.TransactionInterface) (models.TransactionInterface, error) {
+func (m *MockITransactionRepository) Create(ctx context.Context, Transaction models.TransactionInterface) (models.TransactionInterface, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", Transaction)
+	ret := m.ctrl.Call(m, "Create", ctx, Transaction)
 	ret0, _ := ret[0].(models.TransactionInterface)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockITransactionRepositoryMockRecorder) Create(Transaction interface{}) *gomock.Call {
+func (mr *MockITransactionRepositoryMockRecorder) Create(ctx, Transaction interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITransactionRepository)(nil).Create), Transaction)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITransactionRepository)(nil).Create), ctx, Transaction)
 }

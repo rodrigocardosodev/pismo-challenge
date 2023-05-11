@@ -1,6 +1,7 @@
 package transaction_test
 
 import (
+	"context"
 	"database/sql"
 	"log"
 	"testing"
@@ -82,11 +83,12 @@ func TestTransactionRepository_Create(t *testing.T) {
 	setUp()
 	createAccount(transactionDb)
 	defer tearDown(transactionDb)
+	ctx := context.Background()
 
 	transation := models.NewTransaction(1, models.PAGAMENTO, 1000)
 	transactionDb := database.NewTransactionRepository(transactionDb)
 
-	result, err := transactionDb.Create(transation)
+	result, err := transactionDb.Create(ctx, transation)
 	require.Nil(t, err)
 	require.Equal(t, transation, result)
 }

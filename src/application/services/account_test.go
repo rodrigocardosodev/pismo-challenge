@@ -1,6 +1,7 @@
 package services_test
 
 import (
+	"context"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -13,14 +14,15 @@ import (
 func TestAccountService_GetById(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
+	ctx := context.Background()
 
 	account := mock_models.NewMockAccountInterface(ctrl)
 	repository := mock_ports.NewMockIAccountRepository(ctrl)
-	repository.EXPECT().GetByID(gomock.Any()).Return(account, nil)
+	repository.EXPECT().GetByID(ctx, gomock.Any()).Return(account, nil)
 
 	service := services.NewAccountService(repository)
 
-	result, err := service.GetByID(1)
+	result, err := service.GetByID(ctx, 1)
 	require.Nil(t, err)
 	require.Equal(t, account, result)
 }
@@ -28,17 +30,18 @@ func TestAccountService_GetById(t *testing.T) {
 func TestAccountService_Create(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
+	ctx := context.Background()
 
 	account := mock_models.NewMockAccountInterface(ctrl)
 	repository := mock_ports.NewMockIAccountRepository(ctrl)
-	repository.EXPECT().Create(gomock.Any()).Return(account, nil)
+	repository.EXPECT().Create(ctx, gomock.Any()).Return(account, nil)
 
 	service := services.NewAccountService(repository)
 
-	result, err := service.Create("557.242.030-14")
+	result, err := service.Create(ctx, "557.242.030-14")
 	require.Nil(t, err)
 	require.Equal(t, account, result)
 
-	_, err = service.Create("123.456.789-02")
+	_, err = service.Create(ctx, "123.456.789-02")
 	require.Equal(t, "cpf inválido", err.Error())
 }

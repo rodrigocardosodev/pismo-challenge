@@ -1,6 +1,7 @@
 package account_test
 
 import (
+	"context"
 	"database/sql"
 	"log"
 	"testing"
@@ -41,8 +42,7 @@ func tearDown(db *sql.DB) {
 func createTable(db *sql.DB) {
 	query := `CREATE TABLE IF NOT EXISTS accounts (
 							"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-							"document_number" varchar(11) NOT NULL,
-							"amount" integer NOT NULL
+							"document_number" varchar(11) NOT NULL
     				);`
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -52,7 +52,7 @@ func createTable(db *sql.DB) {
 }
 
 func createAccount(db *sql.DB) {
-	query := `INSERT INTO accounts (document_number, amount) VALUES ("55724203014", 1000);`
+	query := `INSERT INTO accounts (document_number) VALUES ("55724203014");`
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -64,24 +64,30 @@ func TestAccountRepository_GetById(t *testing.T) {
 	setUp()
 	createAccount(accountDb)
 	defer tearDown(accountDb)
+	ctx := context.Background()
 
 	accountDb := database.NewAccountRepository(accountDb)
-	account, err := accountDb.GetByID(1)
+	account, err := accountDb.GetByID(ctx, 1)
 	require.Nil(t, err)
 	require.Equal(t, int64(1), account.GetID())
 	require.Equal(t, "55724203014", account.GetDocumentNumber())
-	require.Equal(t, int64(1000), account.GetAmount())
+
+	err = account.IsValid()
+	require.Nil(t, err)
 }
 
 func TestAccountRepository_Create(t *testing.T) {
 	setUp()
 	defer tearDown(accountDb)
+	ctx := context.Background()
 
 	account := models.NewAccount("55724203014")
 	accountDb := database.NewAccountRepository(accountDb)
-	account, err := accountDb.Create(account)
+	account, err := accountDb.Create(ctx, account)
 	require.Nil(t, err)
 	require.Equal(t, int64(1), account.GetID())
 	require.Equal(t, "55724203014", account.GetDocumentNumber())
-	require.Equal(t, int64(0), account.GetAmount())
+
+	err = account.IsValid()
+	require.Nil(t, err)
 }

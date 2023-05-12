@@ -2,7 +2,7 @@
 -- +goose StatementBegin
 SELECT 'up SQL query';
 -- +goose StatementEnd
-CREATE TABLE IF NOT EXISTS accounts ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "document_number" varchar(11) NOT NULL UNIQUE, "created_at" datetime NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS accounts ("id" SERIAL NULL PRIMARY KEY, "document_number" VARCHAR(11) NOT NULL UNIQUE, "created_at" TIMESTAMP NOT NULL);
 
 -- +goose Down
 -- +goose StatementBegin

@@ -17,10 +17,11 @@ func NewHTTPTransactionAdapter(service *services.TransactionService) *HTTPTransa
 func (svc *HTTPTransactionAdapter) CreateTransaction(c *gin.Context) {
 	var transactionRequest dtos.TransactionRequest
 	if err := c.ShouldBindJSON(&transactionRequest); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(400, gin.H{"error": "invalid json"})
 		return
 	}
 	account, err := svc.service.Create(c, transactionRequest.AccountID, transactionRequest.OperationTypeID, transactionRequest.Amount)
+
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return

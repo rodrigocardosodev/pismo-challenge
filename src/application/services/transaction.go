@@ -18,12 +18,13 @@ func NewTransactionService(transactionRepository ports.ITransactionRepository) *
 }
 
 func (t *TransactionService) Create(ctx context.Context, accountId int64, operationId int8, amount uint64) (models.TransactionInterface, error) {
+
 	transaction := models.NewTransaction(accountId, operationId, amount)
 	err := transaction.IsValid()
 	if err != nil {
 		return nil, err
 	}
-	// create a switch case for each operationId
+
 	switch operationId {
 	case models.SAQUE & models.COMPRA_A_VISTA & models.COMPRA_PARCELADA:
 		transaction.SetAmount(amount)

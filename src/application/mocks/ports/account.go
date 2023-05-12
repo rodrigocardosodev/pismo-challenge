@@ -35,6 +35,21 @@ func (m *MockIAccountReader) EXPECT() *MockIAccountReaderMockRecorder {
 	return m.recorder
 }
 
+// GetByDocumentNumber mocks base method.
+func (m *MockIAccountReader) GetByDocumentNumber(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetByDocumentNumber", ctx, documentNumber)
+	ret0, _ := ret[0].(models.AccountInterface)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByDocumentNumber indicates an expected call of GetByDocumentNumber.
+func (mr *MockIAccountReaderMockRecorder) GetByDocumentNumber(ctx, documentNumber interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByDocumentNumber", reflect.TypeOf((*MockIAccountReader)(nil).GetByDocumentNumber), ctx, documentNumber)
+}
+
 // GetByID mocks base method.
 func (m *MockIAccountReader) GetByID(ctx context.Context, id int64) (models.AccountInterface, error) {
 	m.ctrl.T.Helper()
@@ -124,6 +139,21 @@ func (m *MockIAccountRepository) Create(ctx context.Context, account models.Acco
 func (mr *MockIAccountRepositoryMockRecorder) Create(ctx, account interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockIAccountRepository)(nil).Create), ctx, account)
+}
+
+// GetByDocumentNumber mocks base method.
+func (m *MockIAccountRepository) GetByDocumentNumber(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetByDocumentNumber", ctx, documentNumber)
+	ret0, _ := ret[0].(models.AccountInterface)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByDocumentNumber indicates an expected call of GetByDocumentNumber.
+func (mr *MockIAccountRepositoryMockRecorder) GetByDocumentNumber(ctx, documentNumber interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByDocumentNumber", reflect.TypeOf((*MockIAccountRepository)(nil).GetByDocumentNumber), ctx, documentNumber)
 }
 
 // GetByID mocks base method.

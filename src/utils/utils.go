@@ -6,6 +6,12 @@ import (
 	"strings"
 )
 
+var (
+	ErrCpfMustHave11Digits   = errors.New("cpf must have 11 digits")
+	ErrCpfMustHaveOnlyDigits = errors.New("cpf must have only digits")
+	ErrInvalidCpf            = errors.New("invalid cpf")
+)
+
 func IsValidCPF(cpf string) error {
 	// Remova caracteres não numéricos
 	cpf = strings.ReplaceAll(cpf, ".", "")
@@ -13,18 +19,18 @@ func IsValidCPF(cpf string) error {
 
 	// Verifique o tamanho e caracteres
 	if len(cpf) != 11 {
-		return errors.New("cpf deve ter 11 dígitos")
+		return ErrCpfMustHave11Digits
 	}
 
 	for _, char := range cpf {
 		if char < '0' || char > '9' {
-			return errors.New("cpf deve conter apenas dígitos")
+			return ErrCpfMustHaveOnlyDigits
 		}
 	}
 
 	// Verifique se todos os dígitos são iguais
 	if allEqual(cpf) {
-		return errors.New("cpf inválido")
+		return ErrInvalidCpf
 	}
 
 	// Calcule os dígitos verificadores
@@ -33,7 +39,7 @@ func IsValidCPF(cpf string) error {
 
 	// Verifique se os dígitos verificadores são iguais aos fornecidos
 	if cpf[9] != firstDigit || cpf[10] != secondDigit {
-		return errors.New("cpf inválido")
+		return ErrInvalidCpf
 	}
 
 	return nil

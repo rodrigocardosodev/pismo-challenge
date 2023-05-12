@@ -8,6 +8,7 @@ import (
 
 type IAccountReader interface {
 	GetByID(ctx context.Context, id int64) (models.AccountInterface, error)
+	GetByDocumentNumber(ctx context.Context, documentNumber string) (models.AccountInterface, error)
 }
 
 type IAccountWriter interface {

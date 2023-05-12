@@ -6,10 +6,6 @@ import (
 	"github.com/asaskevich/govalidator"
 )
 
-func init() {
-	govalidator.SetFieldsRequiredByDefault(true)
-}
-
 const (
 	COMPRA_A_VISTA   = 1
 	COMPRA_PARCELADA = 2
@@ -19,7 +15,12 @@ const (
 
 var (
 	ErrInvalidOperation = errors.New("invalid operation type")
+	ErrInvalidAmount    = errors.New("invalid amount")
 )
+
+func init() {
+	govalidator.SetFieldsRequiredByDefault(true)
+}
 
 type TransactionInterface interface {
 	GetID() int64

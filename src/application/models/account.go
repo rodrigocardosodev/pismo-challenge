@@ -1,8 +1,19 @@
 package models
 
 import (
+	"errors"
+
 	"github.com/asaskevich/govalidator"
 	"github.com/rodrigocardosodev/pismo-challenge/src/utils"
+)
+
+var (
+	ErrAccountNotFound      = errors.New("account not found")
+	ErrAccountAlreadyExists = errors.New("account already exists")
+
+	ErrCpfMustHave11Digits   = errors.New("cpf must have 11 digits")
+	ErrCpfMustHaveOnlyDigits = errors.New("cpf must have only digits")
+	ErrInvalidCpf            = errors.New("invalid cpf")
 )
 
 func init() {

@@ -3,7 +3,7 @@ package dtos
 type TransactionRequest struct {
 	AccountID       int64  `json:"account_id" binding:"required"`
 	OperationTypeID int8   `json:"operation_type_id" binding:"required"`
-	Amount          uint64 `json:"amount" binding:"required"`
+	Amount          uint64 `json:"amount" binding:"-"`
 }
 
 type TransactionResponse struct {

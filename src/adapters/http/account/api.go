@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/dtos"
+	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/services"
 )
 
@@ -35,10 +36,14 @@ func (svc *HTTPAccountAdapter) GetAccountById(c *gin.Context) {
 	accountID := c.Param("account_id")
 	parsedAccountID, err := strconv.ParseInt(accountID, 10, 64)
 	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(400, gin.H{"error": "invalid account id"})
 		return
 	}
 	account, err := svc.service.GetByID(c, parsedAccountID)
+	if err == models.ErrAccountNotFound {
+		c.JSON(404, gin.H{"error": err.Error()})
+		return
+	}
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return

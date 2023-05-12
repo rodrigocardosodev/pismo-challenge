@@ -42,7 +42,7 @@ func tearDown(db *sql.DB) {
 func createTable(db *sql.DB) {
 	query := `CREATE TABLE IF NOT EXISTS accounts (
 							"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-							"document_number" varchar(11) NOT NULL
+							"document_number" varchar(11) NOT NULL UNIQUE
     				);`
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -90,4 +90,8 @@ func TestAccountRepository_Create(t *testing.T) {
 
 	err = account.IsValid()
 	require.Nil(t, err)
+	accountAlreadyExists := models.NewAccount("55724203014")
+	account, err = accountDb.Create(ctx, accountAlreadyExists)
+	require.NotNil(t, err)
+	require.Nil(t, account)
 }

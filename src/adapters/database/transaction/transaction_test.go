@@ -79,16 +79,41 @@ func createAccount(db *sql.DB) {
 	stmt.Exec()
 }
 
+func createTransactionTrigger(db *sql.DB) {
+	query := `CREATE TRIGGER verify_account_before_insert
+						BEFORE INSERT ON transactions
+						FOR EACH ROW
+						BEGIN
+								SELECT CASE
+										WHEN ((SELECT id FROM accounts WHERE id = NEW.account_id) IS NULL)
+										THEN RAISE (ABORT, 'Account not found')
+								END;
+						END;`
+
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	stmt.Exec()
+}
+
 func TestTransactionRepository_Create(t *testing.T) {
 	setUp()
 	createAccount(transactionDb)
+	createTransactionTrigger(transactionDb)
 	defer tearDown(transactionDb)
 	ctx := context.Background()
 
-	transation := models.NewTransaction(1, models.PAGAMENTO, 1000)
+	transaction := models.NewTransaction(1, models.PAGAMENTO, 1000)
 	transactionDb := database.NewTransactionRepository(transactionDb)
 
-	result, err := transactionDb.Create(ctx, transation)
+	result, err := transactionDb.Create(ctx, transaction)
 	require.Nil(t, err)
-	require.Equal(t, transation, result)
+	require.Equal(t, transaction, result)
+
+	transaction = models.NewTransaction(5, models.SAQUE, 1000)
+	result, err = transactionDb.Create(ctx, transaction)
+	require.Nil(t, result)
+	require.NotNil(t, err)
+	require.Equal(t, "Account not found", err.Error())
 }

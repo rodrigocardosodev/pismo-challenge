@@ -11,8 +11,8 @@ test:
 format:
 	@go fmt ./...
 
-run-migrations:
-	@/go/bin/goose -dir=migrations postgres "host=${PG_HOST} user=${PG_USER} password=${PG_PASSWORD} dbname=${PG_DATABASE} sslmode=disable" up
-
 run-dev:
-	@docker-compose up --build
+	@docker-compose up --build -d
+
+stop-dev:
+	@docker-compose down

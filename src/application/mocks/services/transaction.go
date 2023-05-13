@@ -36,7 +36,7 @@ func (m *MockTransactionServiceInterface) EXPECT() *MockTransactionServiceInterf
 }
 
 // Create mocks base method.
-func (m *MockTransactionServiceInterface) Create(ctx context.Context, accountId int64, operationId int8, amount uint64) (models.TransactionInterface, error) {
+func (m *MockTransactionServiceInterface) Create(ctx context.Context, accountId int64, operationId int8, amount float64) (models.TransactionInterface, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, accountId, operationId, amount)
 	ret0, _ := ret[0].(models.TransactionInterface)

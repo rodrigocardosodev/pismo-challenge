@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 CREATE TABLE IF NOT EXISTS transactions (
   "id" SERIAL PRIMARY KEY, 
   "operation_id" SMALLINT NOT NULL, 
-  "amount" BIGINT NOT NULL, 
+  "amount" FLOAT NOT NULL, 
   "event_date" TIMESTAMP NOT NULL DEFAULT NOW(), 
   "account_id" integer NOT NULL, 
   FOREIGN KEY (account_id) REFERENCES accounts(id)

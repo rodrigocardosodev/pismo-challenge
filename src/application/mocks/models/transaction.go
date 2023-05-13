@@ -48,10 +48,10 @@ func (mr *MockTransactionInterfaceMockRecorder) GetAccountID() *gomock.Call {
 }
 
 // GetAmount mocks base method.
-func (m *MockTransactionInterface) GetAmount() uint64 {
+func (m *MockTransactionInterface) GetAmount() float64 {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAmount")
-	ret0, _ := ret[0].(uint64)
+	ret0, _ := ret[0].(float64)
 	return ret0
 }
 
@@ -104,7 +104,7 @@ func (mr *MockTransactionInterfaceMockRecorder) IsValid() *gomock.Call {
 }
 
 // SetAmount mocks base method.
-func (m *MockTransactionInterface) SetAmount(arg0 uint64) {
+func (m *MockTransactionInterface) SetAmount(arg0 float64) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "SetAmount", arg0)
 }

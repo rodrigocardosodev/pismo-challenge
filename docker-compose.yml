@@ -15,7 +15,7 @@ services:
     
   pismo-migrations:
     image: gomicro/goose
-    command: goose postgres "user=postgres password=postgres dbname=challenge-db sslmode=disable host=pismo-challenge-db" up
+    command: goose postgres "host=pismo-challenge-db user=postgres password=postgres dbname=challenge-db sslmode=disable" up
     volumes:
       - ./migrations/:/migrations
     env_file:

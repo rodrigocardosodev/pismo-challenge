@@ -3,9 +3,7 @@ clean:
 	@rm -Rf ./bin
 
 build: clean
-	@env GOARCH=arm64 GOOS=linux go build -ldflags="-s -w" -o bin/post-account src/functions/post-account/main.go
-	@env GOARCH=arm64 GOOS=linux go build -ldflags="-s -w" -o bin/get-account src/functions/get-account/main.go
-	@env GOARCH=arm64 GOOS=linux go build -ldflags="-s -w" -o bin/post-transaction src/functions/post-transaction/main.go
+	@env GOARCH=arm64 GOOS=linux go build -ldflags="-s -w" -o bin/pismo-challenge src/cmd/api/main.go
 
 test:
 	@go test -v ./...
@@ -13,5 +11,8 @@ test:
 format:
 	@go fmt ./...
 
+run-migrations:
+	@/go/bin/goose -dir=migrations postgres "host=${PG_HOST} user=${PG_USER} password=${PG_PASSWORD} dbname=${PG_DATABASE} sslmode=disable" up
+
 run-dev:
-	@serverless offline --useDocker start --host 0.0.0.0
+	@docker-compose up --build

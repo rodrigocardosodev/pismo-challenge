@@ -10,10 +10,10 @@ import (
 )
 
 type HTTPAccountAdapter struct {
-	service *services.AccountService
+	service services.AccountServiceInterface
 }
 
-func NewHTTPAccountAdapter(service *services.AccountService) *HTTPAccountAdapter {
+func NewHTTPAccountAdapter(service services.AccountServiceInterface) *HTTPAccountAdapter {
 	return &HTTPAccountAdapter{service: service}
 }
 
@@ -24,8 +24,12 @@ func (svc *HTTPAccountAdapter) CreateAccount(c *gin.Context) {
 		return
 	}
 	account, err := svc.service.Create(c, accountRequest.DocumentNumber)
-	if err != nil {
+	if err == models.ErrCpfMustHaveOnlyDigits || err == models.ErrCpfMustHave11Digits || err == models.ErrInvalidCpf || err == models.ErrAccountAlreadyExists {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -45,7 +49,7 @@ func (svc *HTTPAccountAdapter) GetAccountById(c *gin.Context) {
 		return
 	}
 	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 

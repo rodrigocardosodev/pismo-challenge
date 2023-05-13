@@ -17,6 +17,9 @@ func (a *TransactionRepository) Create(ctx context.Context, transaction models.T
 	var event_date string
 	err := a.DB.QueryRow("INSERT INTO transactions (account_id, operation_id, amount) VALUES ($1, $2, $3) RETURNING id, event_date", transaction.GetAccountID(), transaction.GetOperationTypeId(), transaction.GetAmount()).Scan(&id, &event_date)
 	if err != nil {
+		if err.Error() == "pq: account not found" {
+			return nil, models.ErrAccountNotFound
+		}
 		return nil, err
 	}
 

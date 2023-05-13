@@ -1,16 +1,17 @@
-package account
+package transaction
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/dtos"
+	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/services"
 )
 
 type HTTPTransactionAdapter struct {
-	service *services.TransactionService
+	service services.TransactionServiceInterface
 }
 
-func NewHTTPTransactionAdapter(service *services.TransactionService) *HTTPTransactionAdapter {
+func NewHTTPTransactionAdapter(service services.TransactionServiceInterface) *HTTPTransactionAdapter {
 	return &HTTPTransactionAdapter{service: service}
 }
 
@@ -21,9 +22,17 @@ func (svc *HTTPTransactionAdapter) CreateTransaction(c *gin.Context) {
 		return
 	}
 	account, err := svc.service.Create(c, transactionRequest.AccountID, transactionRequest.OperationTypeID, transactionRequest.Amount)
+	if err == models.ErrInvalidOperation {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	if err == models.ErrAccountNotFound {
+		c.JSON(404, gin.H{"error": err.Error()})
+		return
+	}
 
 	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 

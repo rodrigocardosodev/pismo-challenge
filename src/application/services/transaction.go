@@ -11,7 +11,11 @@ type TransactionService struct {
 	TransactionRepository ports.ITransactionRepository
 }
 
-func NewTransactionService(transactionRepository ports.ITransactionRepository) *TransactionService {
+type TransactionServiceInterface interface {
+	Create(ctx context.Context, accountId int64, operationId int8, amount uint64) (models.TransactionInterface, error)
+}
+
+func NewTransactionService(transactionRepository ports.ITransactionRepository) TransactionServiceInterface {
 	return &TransactionService{
 		TransactionRepository: transactionRepository,
 	}

@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	userDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/database/account"
@@ -11,12 +13,23 @@ import (
 	transactionHTTP "github.com/rodrigocardosodev/pismo-challenge/src/adapters/http/transaction"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/services"
 
-	// import sqlite3 driver
-	_ "github.com/mattn/go-sqlite3"
+	// import postgres driver
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	db, err := sql.Open("sqlite3", "./pismo.db")
+	var (
+		DB_HOST     = os.Getenv("PG_HOST")
+		DB_PORT     = os.Getenv("PG_PORT")
+		DB_USER     = os.Getenv("PG_USER")
+		DB_PASSWORD = os.Getenv("PG_PASSWORD")
+		DB_DATABASE = os.Getenv("PG_DATABASE")
+	)
+
+	// Create string connection
+	strConn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE)
+
+	db, err := sql.Open("postgres", strConn)
 	if err != nil {
 		panic(err)
 	}

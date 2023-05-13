@@ -86,7 +86,7 @@ func createTransactionTrigger(db *sql.DB) {
 						BEGIN
 								SELECT CASE
 										WHEN ((SELECT id FROM accounts WHERE id = NEW.account_id) IS NULL)
-										THEN RAISE (ABORT, 'Account not found')
+										THEN RAISE (ABORT, 'account not found')
 								END;
 						END;`
 
@@ -115,5 +115,5 @@ func TestTransactionRepository_Create(t *testing.T) {
 	result, err = transactionDb.Create(ctx, transaction)
 	require.Nil(t, result)
 	require.NotNil(t, err)
-	require.Equal(t, "Account not found", err.Error())
+	require.Equal(t, "account not found", err.Error())
 }

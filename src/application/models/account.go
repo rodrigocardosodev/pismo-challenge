@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/rodrigocardosodev/pismo-challenge/src/utils"
 )
 
 var (
@@ -45,12 +44,7 @@ func (a *Account) SetID(id int64) {
 }
 
 func (a *Account) IsValid() error {
-	err := utils.IsValidCPF(a.DocumentNumber)
-	if err != nil {
-		return err
-	}
-
-	_, err = govalidator.ValidateStruct(a)
+	_, err := govalidator.ValidateStruct(a)
 	if err != nil {
 		return err
 	}

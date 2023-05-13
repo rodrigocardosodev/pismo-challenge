@@ -22,7 +22,7 @@ func (svc *HTTPTransactionAdapter) CreateTransaction(c *gin.Context) {
 		return
 	}
 	account, err := svc.service.Create(c, transactionRequest.AccountID, transactionRequest.OperationTypeID, transactionRequest.Amount)
-	if err == models.ErrInvalidOperation {
+	if err == models.ErrInvalidOperation || err == models.ErrInvalidAmount {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}

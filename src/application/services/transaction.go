@@ -29,6 +29,10 @@ func (t *TransactionService) Create(ctx context.Context, accountId int64, operat
 		return nil, err
 	}
 
+	if amount < 0 {
+		return nil, models.ErrInvalidAmount
+	}
+
 	switch operationId {
 	case models.SAQUE & models.COMPRA_A_VISTA & models.COMPRA_PARCELADA:
 		transaction.SetAmount(amount)

@@ -26,14 +26,13 @@ func main() {
 		DB_DATABASE = os.Getenv("PG_DATABASE")
 	)
 
-	// Create string connection
 	strConn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE)
-
 	db, err := sql.Open("postgres", strConn)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
+
 	accountRepository := userDatabase.NewAccountRepository(db)
 	accountService := services.NewAccountService(accountRepository)
 	accountRoutes := userHTTP.NewHTTPAccountAdapter(accountService)
@@ -44,6 +43,8 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
+	router.Use(gin.ErrorLogger())
 
 	router.POST("/accounts", accountRoutes.CreateAccount)
 	router.GET("/accounts/:account_id", accountRoutes.GetAccountById)

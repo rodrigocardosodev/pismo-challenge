@@ -8,10 +8,10 @@ import (
 )
 
 type HTTPTransactionAdapter struct {
-	service services.TransactionServiceInterface
+	service services.ITrasactionService
 }
 
-func NewHTTPTransactionAdapter(service services.TransactionServiceInterface) *HTTPTransactionAdapter {
+func NewHTTPTransactionAdapter(service services.ITrasactionService) *HTTPTransactionAdapter {
 	return &HTTPTransactionAdapter{service: service}
 }
 

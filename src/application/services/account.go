@@ -13,12 +13,10 @@ type AccountService struct {
 	AccountRepository ports.IAccountRepository
 }
 
-type AccountServiceInterface interface {
+type IAccountService interface {
 	Create(ctx context.Context, documentNumber string) (models.AccountInterface, error)
 	GetByID(ctx context.Context, id int64) (models.AccountInterface, error)
 	IsValidCPF(cpf string) error
-	allEqual(cpf string) bool
-	calculateDigit(cpf string) byte
 }
 
 func (a *AccountService) Create(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
@@ -104,7 +102,7 @@ func (a *AccountService) calculateDigit(cpf string) byte {
 	return byte(11 - remainder + '0')
 }
 
-func NewAccountService(accountRepository ports.IAccountRepository) AccountServiceInterface {
+func NewAccountService(accountRepository ports.IAccountRepository) IAccountService {
 	return &AccountService{
 		AccountRepository: accountRepository,
 	}

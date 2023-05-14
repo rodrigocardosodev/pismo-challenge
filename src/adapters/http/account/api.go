@@ -10,10 +10,10 @@ import (
 )
 
 type HTTPAccountAdapter struct {
-	service services.AccountServiceInterface
+	service services.IAccountService
 }
 
-func NewHTTPAccountAdapter(service services.AccountServiceInterface) *HTTPAccountAdapter {
+func NewHTTPAccountAdapter(service services.IAccountService) *HTTPAccountAdapter {
 	return &HTTPAccountAdapter{service: service}
 }
 

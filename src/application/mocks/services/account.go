@@ -12,31 +12,31 @@ import (
 	models "github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 )
 
-// MockAccountServiceInterface is a mock of AccountServiceInterface interface.
-type MockAccountServiceInterface struct {
+// MockIAccountService is a mock of IAccountService interface.
+type MockIAccountService struct {
 	ctrl     *gomock.Controller
-	recorder *MockAccountServiceInterfaceMockRecorder
+	recorder *MockIAccountServiceMockRecorder
 }
 
-// MockAccountServiceInterfaceMockRecorder is the mock recorder for MockAccountServiceInterface.
-type MockAccountServiceInterfaceMockRecorder struct {
-	mock *MockAccountServiceInterface
+// MockIAccountServiceMockRecorder is the mock recorder for MockIAccountService.
+type MockIAccountServiceMockRecorder struct {
+	mock *MockIAccountService
 }
 
-// NewMockAccountServiceInterface creates a new mock instance.
-func NewMockAccountServiceInterface(ctrl *gomock.Controller) *MockAccountServiceInterface {
-	mock := &MockAccountServiceInterface{ctrl: ctrl}
-	mock.recorder = &MockAccountServiceInterfaceMockRecorder{mock}
+// NewMockIAccountService creates a new mock instance.
+func NewMockIAccountService(ctrl *gomock.Controller) *MockIAccountService {
+	mock := &MockIAccountService{ctrl: ctrl}
+	mock.recorder = &MockIAccountServiceMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockAccountServiceInterface) EXPECT() *MockAccountServiceInterfaceMockRecorder {
+func (m *MockIAccountService) EXPECT() *MockIAccountServiceMockRecorder {
 	return m.recorder
 }
 
 // Create mocks base method.
-func (m *MockAccountServiceInterface) Create(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
+func (m *MockIAccountService) Create(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, documentNumber)
 	ret0, _ := ret[0].(models.AccountInterface)
@@ -45,13 +45,13 @@ func (m *MockAccountServiceInterface) Create(ctx context.Context, documentNumber
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockAccountServiceInterfaceMockRecorder) Create(ctx, documentNumber interface{}) *gomock.Call {
+func (mr *MockIAccountServiceMockRecorder) Create(ctx, documentNumber interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockAccountServiceInterface)(nil).Create), ctx, documentNumber)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockIAccountService)(nil).Create), ctx, documentNumber)
 }
 
 // GetByID mocks base method.
-func (m *MockAccountServiceInterface) GetByID(ctx context.Context, id int64) (models.AccountInterface, error) {
+func (m *MockIAccountService) GetByID(ctx context.Context, id int64) (models.AccountInterface, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", ctx, id)
 	ret0, _ := ret[0].(models.AccountInterface)
@@ -60,13 +60,13 @@ func (m *MockAccountServiceInterface) GetByID(ctx context.Context, id int64) (mo
 }
 
 // GetByID indicates an expected call of GetByID.
-func (mr *MockAccountServiceInterfaceMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
+func (mr *MockIAccountServiceMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockAccountServiceInterface)(nil).GetByID), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockIAccountService)(nil).GetByID), ctx, id)
 }
 
 // IsValidCPF mocks base method.
-func (m *MockAccountServiceInterface) IsValidCPF(cpf string) error {
+func (m *MockIAccountService) IsValidCPF(cpf string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "IsValidCPF", cpf)
 	ret0, _ := ret[0].(error)
@@ -74,35 +74,7 @@ func (m *MockAccountServiceInterface) IsValidCPF(cpf string) error {
 }
 
 // IsValidCPF indicates an expected call of IsValidCPF.
-func (mr *MockAccountServiceInterfaceMockRecorder) IsValidCPF(cpf interface{}) *gomock.Call {
+func (mr *MockIAccountServiceMockRecorder) IsValidCPF(cpf interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsValidCPF", reflect.TypeOf((*MockAccountServiceInterface)(nil).IsValidCPF), cpf)
-}
-
-// allEqual mocks base method.
-func (m *MockAccountServiceInterface) allEqual(cpf string) bool {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "allEqual", cpf)
-	ret0, _ := ret[0].(bool)
-	return ret0
-}
-
-// allEqual indicates an expected call of allEqual.
-func (mr *MockAccountServiceInterfaceMockRecorder) allEqual(cpf interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "allEqual", reflect.TypeOf((*MockAccountServiceInterface)(nil).allEqual), cpf)
-}
-
-// calculateDigit mocks base method.
-func (m *MockAccountServiceInterface) calculateDigit(cpf string) byte {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "calculateDigit", cpf)
-	ret0, _ := ret[0].(byte)
-	return ret0
-}
-
-// calculateDigit indicates an expected call of calculateDigit.
-func (mr *MockAccountServiceInterfaceMockRecorder) calculateDigit(cpf interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "calculateDigit", reflect.TypeOf((*MockAccountServiceInterface)(nil).calculateDigit), cpf)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsValidCPF", reflect.TypeOf((*MockIAccountService)(nil).IsValidCPF), cpf)
 }

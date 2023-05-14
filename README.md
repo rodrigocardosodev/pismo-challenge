@@ -12,6 +12,12 @@ Caso deseje derrubar os conteineres levantandos pelo comando acima, basta execut
 make stop-dev
 ```
 
+# Como rodar os testes?
+Para rodar os testes basta executar o seguinte comando:
+```bash
+make test
+```
+
 # Desenho da arquitetura
 
 ![image info](./assets/architecture.png)
@@ -90,7 +96,8 @@ make stop-dev
             └── main.go
 ```
 
-# Sugestão de ideias para melhorar a aplicação
+# Ideias para melhoria da aplicação
+- Criar documentação da API usando OpenAPI Redoc
 - Criar um serviço de consulta de saldo
 - Criar um serviço que realize de maneira mais efetiva o pagamento parcelado
 - Criar um serviço de notificação para o cliente

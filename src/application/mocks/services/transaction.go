@@ -12,31 +12,31 @@ import (
 	models "github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 )
 
-// MockTransactionServiceInterface is a mock of TransactionServiceInterface interface.
-type MockTransactionServiceInterface struct {
+// MockITrasactionService is a mock of ITrasactionService interface.
+type MockITrasactionService struct {
 	ctrl     *gomock.Controller
-	recorder *MockTransactionServiceInterfaceMockRecorder
+	recorder *MockITrasactionServiceMockRecorder
 }
 
-// MockTransactionServiceInterfaceMockRecorder is the mock recorder for MockTransactionServiceInterface.
-type MockTransactionServiceInterfaceMockRecorder struct {
-	mock *MockTransactionServiceInterface
+// MockITrasactionServiceMockRecorder is the mock recorder for MockITrasactionService.
+type MockITrasactionServiceMockRecorder struct {
+	mock *MockITrasactionService
 }
 
-// NewMockTransactionServiceInterface creates a new mock instance.
-func NewMockTransactionServiceInterface(ctrl *gomock.Controller) *MockTransactionServiceInterface {
-	mock := &MockTransactionServiceInterface{ctrl: ctrl}
-	mock.recorder = &MockTransactionServiceInterfaceMockRecorder{mock}
+// NewMockITrasactionService creates a new mock instance.
+func NewMockITrasactionService(ctrl *gomock.Controller) *MockITrasactionService {
+	mock := &MockITrasactionService{ctrl: ctrl}
+	mock.recorder = &MockITrasactionServiceMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockTransactionServiceInterface) EXPECT() *MockTransactionServiceInterfaceMockRecorder {
+func (m *MockITrasactionService) EXPECT() *MockITrasactionServiceMockRecorder {
 	return m.recorder
 }
 
 // Create mocks base method.
-func (m *MockTransactionServiceInterface) Create(ctx context.Context, accountId int64, operationId int8, amount float64) (models.TransactionInterface, error) {
+func (m *MockITrasactionService) Create(ctx context.Context, accountId int64, operationId int8, amount float64) (models.TransactionInterface, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", ctx, accountId, operationId, amount)
 	ret0, _ := ret[0].(models.TransactionInterface)
@@ -45,7 +45,7 @@ func (m *MockTransactionServiceInterface) Create(ctx context.Context, accountId 
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockTransactionServiceInterfaceMockRecorder) Create(ctx, accountId, operationId, amount interface{}) *gomock.Call {
+func (mr *MockITrasactionServiceMockRecorder) Create(ctx, accountId, operationId, amount interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockTransactionServiceInterface)(nil).Create), ctx, accountId, operationId, amount)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITrasactionService)(nil).Create), ctx, accountId, operationId, amount)
 }

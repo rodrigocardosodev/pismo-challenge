@@ -17,6 +17,19 @@ func NewHTTPTransactionAdapter(service services.ITrasactionService) *HTTPTransac
 	return &HTTPTransactionAdapter{service: service}
 }
 
+// CreateTransaction godoc
+//
+//	@Summary		Create transaction
+//	@Description	Create transaction
+//	@Tags			Transactions
+//	@Accept			json
+//	@Produce		json
+//	@Param			transaction	body		dtos.TransactionRequest	true	"Create transaction"
+//	@Success		201		{object}	dtos.TransactionResponse
+//	@Failure		400		{object}	dtos.HTTPError
+//	@Failure		404		{object}	dtos.HTTPError
+//	@Failure		500		{object}	dtos.HTTPError
+//	@Router			/transactions [post]
 func (svc *HTTPTransactionAdapter) CreateTransaction(c *gin.Context) {
 	var transactionRequest dtos.TransactionRequest
 	if err := c.ShouldBindJSON(&transactionRequest); err != nil {

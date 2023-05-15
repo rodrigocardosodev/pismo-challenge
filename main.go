@@ -15,8 +15,23 @@ import (
 
 	// import postgres driver
 	_ "github.com/lib/pq"
+	_ "github.com/rodrigocardosodev/pismo-challenge/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+//	@title			Pismo Challenge API
+//	@version		1.0
+//	@description	This is a challenge for Pismo's backend developer position.
+
+//	@contact.name	Rodrigo Cardoso
+//	@contact.email	rodrigo.cardoso92@outlook.com
+
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
+
+//	@host		localhost:8080
+//	@BasePath	/
 func main() {
 	var (
 		DB_HOST     = os.Getenv("PG_HOST")
@@ -45,6 +60,8 @@ func main() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(gin.ErrorLogger())
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.POST("/accounts", accountRoutes.CreateAccount)
 	router.GET("/accounts/:account_id", accountRoutes.GetAccountById)

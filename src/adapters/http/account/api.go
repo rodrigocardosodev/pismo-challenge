@@ -18,6 +18,19 @@ func NewHTTPAccountAdapter(service services.IAccountService) *HTTPAccountAdapter
 	return &HTTPAccountAdapter{service: service}
 }
 
+// AddAccount godoc
+//
+//	@Summary		Create account
+//	@Description	Create account
+//	@Tags			Accounts
+//	@Accept			json
+//	@Produce		json
+//	@Param			account	body		dtos.AccountRequest	true	"Add account"
+//	@Success		201		{object}	dtos.AccountResponse
+//	@Failure		400		{object}	dtos.HTTPError
+//	@Failure		404		{object}	dtos.HTTPError
+//	@Failure		500		{object}	dtos.HTTPError
+//	@Router			/accounts [post]
 func (svc *HTTPAccountAdapter) CreateAccount(c *gin.Context) {
 	var accountRequest dtos.AccountRequest
 	if err := c.ShouldBindJSON(&accountRequest); err != nil {
@@ -37,6 +50,19 @@ func (svc *HTTPAccountAdapter) CreateAccount(c *gin.Context) {
 	c.JSON(http.StatusCreated, account)
 }
 
+// ShowAccount godoc
+//
+//	@Summary		Get account by ID
+//	@Description	Get account by ID
+//	@Tags			Accounts
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path		int	true	"Account ID"
+//	@Success		200	{object}	dtos.AccountResponse
+//	@Failure		400	{object}	dtos.HTTPError
+//	@Failure		404	{object}	dtos.HTTPError
+//	@Failure		500	{object}	dtos.HTTPError
+//	@Router			/accounts/{id} [get]
 func (svc *HTTPAccountAdapter) GetAccountById(c *gin.Context) {
 	accountID := c.Param("account_id")
 	parsedAccountID, err := strconv.ParseInt(accountID, 10, 64)
@@ -57,6 +83,19 @@ func (svc *HTTPAccountAdapter) GetAccountById(c *gin.Context) {
 	c.JSON(http.StatusOK, account)
 }
 
+// ShowBalanceAccount godoc
+//
+//	@Summary		Get balance account by Account ID
+//	@Description	get balance account by account id
+//	@Tags			Accounts
+//	@Accept			json
+//	@Produce		json
+//	@Param			id	path		int	true	"Account ID"
+//	@Success		200	{object}	dtos.AccountBalanceResponse
+//	@Failure		400	{object}	dtos.HTTPError
+//	@Failure		404	{object}	dtos.HTTPError
+//	@Failure		500	{object}	dtos.HTTPError
+//	@Router			/accounts/{id}/balance [get]
 func (svc *HTTPAccountAdapter) GetAccountBalance(c *gin.Context) {
 	var accountBalanceResponse dtos.AccountBalanceResponse
 	accountID := c.Param("account_id")

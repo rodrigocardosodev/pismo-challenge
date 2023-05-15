@@ -1,0 +1,202 @@
+basePath: /
+definitions:
+  dtos.AccountBalanceResponse:
+    properties:
+      balance:
+        type: number
+      document_number:
+        type: string
+      id:
+        type: integer
+    type: object
+  dtos.AccountRequest:
+    properties:
+      document_number:
+        type: string
+    required:
+    - document_number
+    type: object
+  dtos.AccountResponse:
+    properties:
+      document_number:
+        type: integer
+      id:
+        type: integer
+    type: object
+  dtos.HTTPError:
+    properties:
+      error:
+        type: string
+    type: object
+  dtos.TransactionRequest:
+    properties:
+      account_id:
+        type: integer
+      amount:
+        type: number
+      operation_type_id:
+        type: integer
+    required:
+    - account_id
+    - operation_type_id
+    type: object
+  dtos.TransactionResponse:
+    properties:
+      account_id:
+        type: integer
+      amount:
+        type: number
+      event_date:
+        type: string
+      id:
+        type: integer
+      operation_type_id:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: rodrigo.cardoso92@outlook.com
+    name: Rodrigo Cardoso
+  description: This is a challenge for Pismo's backend developer position.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Pismo Challenge API
+  version: "1.0"
+paths:
+  /accounts:
+    post:
+      consumes:
+      - application/json
+      description: Create account
+      parameters:
+      - description: Add account
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.AccountRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dtos.AccountResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+      summary: Create account
+      tags:
+      - Accounts
+  /accounts/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get account by ID
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.AccountResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+      summary: Get account by ID
+      tags:
+      - Accounts
+  /accounts/{id}/balance:
+    get:
+      consumes:
+      - application/json
+      description: get balance account by account id
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.AccountBalanceResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+      summary: Get balance account by Account ID
+      tags:
+      - Accounts
+  /transactions:
+    post:
+      consumes:
+      - application/json
+      description: Create transaction
+      parameters:
+      - description: Create transaction
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.TransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dtos.TransactionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dtos.HTTPError'
+      summary: Create transaction
+      tags:
+      - Transactions
+swagger: "2.0"

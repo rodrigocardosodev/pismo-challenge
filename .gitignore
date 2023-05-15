@@ -26,3 +26,5 @@ node_modules/
 
 # Environment variables file
 .env
+**.env
+data/

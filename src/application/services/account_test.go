@@ -7,6 +7,7 @@ import (
 	"github.com/golang/mock/gomock"
 	mock_models "github.com/rodrigocardosodev/pismo-challenge/src/application/mocks/models"
 	mock_ports "github.com/rodrigocardosodev/pismo-challenge/src/application/mocks/ports"
+	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/services"
 	"github.com/stretchr/testify/require"
 )
@@ -17,10 +18,11 @@ func TestAccountService_GetById(t *testing.T) {
 	ctx := context.Background()
 
 	account := mock_models.NewMockAccountInterface(ctrl)
-	repository := mock_ports.NewMockIAccountRepository(ctrl)
-	repository.EXPECT().GetByID(ctx, gomock.Any()).Return(account, nil)
+	accountRepository := mock_ports.NewMockIAccountRepository(ctrl)
+	transactionRepository := mock_ports.NewMockITransactionRepository(ctrl)
+	accountRepository.EXPECT().GetByID(ctx, gomock.Any()).Return(account, nil)
 
-	service := services.NewAccountService(repository)
+	service := services.NewAccountService(accountRepository, transactionRepository)
 
 	result, err := service.GetByID(ctx, 1)
 	require.Nil(t, err)
@@ -33,15 +35,49 @@ func TestAccountService_Create(t *testing.T) {
 	ctx := context.Background()
 
 	account := mock_models.NewMockAccountInterface(ctrl)
-	repository := mock_ports.NewMockIAccountRepository(ctrl)
-	repository.EXPECT().Create(ctx, gomock.Any()).Return(account, nil)
+	accountRepository := mock_ports.NewMockIAccountRepository(ctrl)
+	transactionRepository := mock_ports.NewMockITransactionRepository(ctrl)
+	accountRepository.EXPECT().Create(ctx, gomock.Any()).Return(account, nil)
+	accountRepository.EXPECT().GetByDocumentNumber(ctx, gomock.Any()).Return(nil, nil)
 
-	service := services.NewAccountService(repository)
+	service := services.NewAccountService(accountRepository, transactionRepository)
 
-	result, err := service.Create(ctx, "557.242.030-14")
+	result, err := service.Create(ctx, "05803828343")
 	require.Nil(t, err)
 	require.Equal(t, account, result)
 
-	_, err = service.Create(ctx, "123.456.789-02")
-	require.Equal(t, "cpf inválido", err.Error())
+	result, err = service.Create(ctx, "0580382834")
+	require.NotNil(t, err)
+	require.Nil(t, result)
+	require.Equal(t, "cpf must have 11 digits", err.Error())
+
+	result, err = service.Create(ctx, "12345678900")
+	require.NotNil(t, err)
+	require.Nil(t, result)
+	require.Equal(t, "invalid cpf", err.Error())
+
+	accountRepository.EXPECT().GetByDocumentNumber(ctx, gomock.Any()).Return(account, nil)
+	result, err = service.Create(ctx, "05803828343")
+	require.NotNil(t, err)
+	require.Nil(t, result)
+	require.Equal(t, "account already exists", err.Error())
+}
+
+func TestAccountService_GetBalanceAccount(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+	ctx := context.Background()
+
+	account := models.NewAccount("05803828343")
+
+	accountRepository := mock_ports.NewMockIAccountRepository(ctrl)
+	accountRepository.EXPECT().GetByID(ctx, gomock.Any()).Return(account, nil)
+	transactionRepository := mock_ports.NewMockITransactionRepository(ctrl)
+	transactionRepository.EXPECT().GetBalanceByAccountID(ctx, gomock.Any()).Return(1000.0, nil)
+
+	service := services.NewAccountService(accountRepository, transactionRepository)
+
+	result, err := service.GetAccountBalance(ctx, 1)
+	require.Nil(t, err)
+	require.Equal(t, 1000.0, result.GetBalance())
 }

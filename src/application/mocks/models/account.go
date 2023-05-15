@@ -33,6 +33,20 @@ func (m *MockAccountInterface) EXPECT() *MockAccountInterfaceMockRecorder {
 	return m.recorder
 }
 
+// GetBalance mocks base method.
+func (m *MockAccountInterface) GetBalance() float64 {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBalance")
+	ret0, _ := ret[0].(float64)
+	return ret0
+}
+
+// GetBalance indicates an expected call of GetBalance.
+func (mr *MockAccountInterfaceMockRecorder) GetBalance() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalance", reflect.TypeOf((*MockAccountInterface)(nil).GetBalance))
+}
+
 // GetDocumentNumber mocks base method.
 func (m *MockAccountInterface) GetDocumentNumber() string {
 	m.ctrl.T.Helper()
@@ -73,6 +87,18 @@ func (m *MockAccountInterface) IsValid() error {
 func (mr *MockAccountInterfaceMockRecorder) IsValid() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsValid", reflect.TypeOf((*MockAccountInterface)(nil).IsValid))
+}
+
+// SetBalance mocks base method.
+func (m *MockAccountInterface) SetBalance(arg0 float64) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetBalance", arg0)
+}
+
+// SetBalance indicates an expected call of SetBalance.
+func (mr *MockAccountInterfaceMockRecorder) SetBalance(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetBalance", reflect.TypeOf((*MockAccountInterface)(nil).SetBalance), arg0)
 }
 
 // SetID mocks base method.

@@ -124,7 +124,7 @@ func TestHTTPAccountAdapter_GetAccountByID(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	account := models.NewAccount("05803828343")
+	account := models.NewAccount("95694057082")
 	account.SetID(1)
 
 	t.Run("Success GetAccountByID", func(t *testing.T) {
@@ -143,7 +143,7 @@ func TestHTTPAccountAdapter_GetAccountByID(t *testing.T) {
 		router.ServeHTTP(responseWriter, httpRequest)
 
 		require.Equal(t, http.StatusOK, responseWriter.Code)
-		require.Equal(t, `{"id":1,"document_number":"05803828343"}`, responseWriter.Body.String())
+		require.Equal(t, `{"id":1,"document_number":"95694057082"}`, responseWriter.Body.String())
 	})
 
 	t.Run("Error account not found GetAccountByID", func(t *testing.T) {
@@ -187,7 +187,7 @@ func TestHTTPAccountAdapter_GetAccountBalance(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	account := models.NewAccount("05803828343")
+	account := models.NewAccount("95694057082")
 	account.SetID(1)
 
 	t.Run("Success GetAccountBalance", func(t *testing.T) {
@@ -206,7 +206,7 @@ func TestHTTPAccountAdapter_GetAccountBalance(t *testing.T) {
 		router.ServeHTTP(responseWriter, httpRequest)
 
 		require.Equal(t, http.StatusOK, responseWriter.Code)
-		require.Equal(t, `{"id":1,"document_number":"05803828343","balance":0}`, responseWriter.Body.String())
+		require.Equal(t, `{"id":1,"document_number":"95694057082","balance":0}`, responseWriter.Body.String())
 	})
 
 	t.Run("Error account not found GetAccountBalance", func(t *testing.T) {

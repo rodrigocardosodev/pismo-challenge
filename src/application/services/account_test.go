@@ -42,11 +42,11 @@ func TestAccountService_Create(t *testing.T) {
 
 	service := services.NewAccountService(accountRepository, transactionRepository)
 
-	result, err := service.Create(ctx, "05803828343")
+	result, err := service.Create(ctx, "95694057082")
 	require.Nil(t, err)
 	require.Equal(t, account, result)
 
-	result, err = service.Create(ctx, "0580382834")
+	result, err = service.Create(ctx, "9569405708")
 	require.NotNil(t, err)
 	require.Nil(t, result)
 	require.Equal(t, "cpf must have 11 digits", err.Error())
@@ -57,7 +57,7 @@ func TestAccountService_Create(t *testing.T) {
 	require.Equal(t, "invalid cpf", err.Error())
 
 	accountRepository.EXPECT().GetByDocumentNumber(ctx, gomock.Any()).Return(account, nil)
-	result, err = service.Create(ctx, "05803828343")
+	result, err = service.Create(ctx, "95694057082")
 	require.NotNil(t, err)
 	require.Nil(t, result)
 	require.Equal(t, "account already exists", err.Error())
@@ -68,7 +68,7 @@ func TestAccountService_GetBalanceAccount(t *testing.T) {
 	defer ctrl.Finish()
 	ctx := context.Background()
 
-	account := models.NewAccount("05803828343")
+	account := models.NewAccount("95694057082")
 
 	accountRepository := mock_ports.NewMockIAccountRepository(ctrl)
 	accountRepository.EXPECT().GetByID(ctx, gomock.Any()).Return(account, nil)

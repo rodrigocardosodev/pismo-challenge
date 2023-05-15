@@ -6,11 +6,11 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	userDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/database/account"
-	transactionDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/database/transaction"
+	userDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/account"
+	transactionDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/transaction"
 
-	userHTTP "github.com/rodrigocardosodev/pismo-challenge/src/adapters/http/account"
-	transactionHTTP "github.com/rodrigocardosodev/pismo-challenge/src/adapters/http/transaction"
+	userHTTP "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/account"
+	transactionHTTP "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/transaction"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/services"
 
 	// import postgres driver
@@ -30,8 +30,8 @@ import (
 //	@license.name	Apache 2.0
 //	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
-//	@host		localhost:8080
-//	@BasePath	/
+// @host		localhost:8080
+// @BasePath	/
 func main() {
 	var (
 		DB_HOST     = os.Getenv("PG_HOST")

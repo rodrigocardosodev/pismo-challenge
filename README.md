@@ -14,7 +14,6 @@ PG_PORT=
 PG_USER=
 PG_PASSWORD=
 PG_DATABASE=
-
 ```
 
 Para rodar o projeto basta executar o seguinte comando:
@@ -27,9 +26,16 @@ make stop-dev
 ```
 
 # Como rodar os testes?
-Para rodar os testes basta executar o seguinte comando:
+Os comandos para execução de testes estão separados entre os testes unitários e os testes de integração.
+
+Para rodar os testes unitários basta executar o seguinte comando:
 ```bash
-make test
+make unit-test
+```
+
+Para rodar os testes de integração basta executar o seguinte comando:
+```bash
+make integration-test
 ```
 
 # Desenho da arquitetura
@@ -112,8 +118,6 @@ make test
 ```
 
 # Ideias para melhoria da aplicação
-- Criar documentação da API usando OpenAPI Redoc
-- Usar o NGINX como load balancer
 - Implementar o pattern CQRS para separar as responsabilidades de leitura e escrita usando redis para cache
 - Criar um serviço que realize de maneira mais efetiva o pagamento parcelado
 - Criar um serviço de notificação para o cliente

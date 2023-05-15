@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
-	http_account "github.com/rodrigocardosodev/pismo-challenge/src/adapters/http/account"
+	http_account "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/account"
 	mock_models "github.com/rodrigocardosodev/pismo-challenge/src/application/mocks/models"
 	mock_services "github.com/rodrigocardosodev/pismo-challenge/src/application/mocks/services"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"

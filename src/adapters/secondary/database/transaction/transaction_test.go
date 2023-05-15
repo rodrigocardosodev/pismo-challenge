@@ -8,7 +8,7 @@ import (
 
 	_ "github.com/mattn/go-sqlite3" // Import SQLite3 driver
 
-	database "github.com/rodrigocardosodev/pismo-challenge/src/adapters/database/transaction"
+	database "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/transaction"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 	"github.com/stretchr/testify/require"
 )

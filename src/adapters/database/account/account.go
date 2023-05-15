@@ -1,6 +1,7 @@
 package account
 
 import (
+	"context"
 	"database/sql"
 
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
@@ -11,24 +12,70 @@ type AccountRepository struct {
 	DB *sql.DB
 }
 
-func (a *AccountRepository) GetByID(id int64) (models.AccountInterface, error) {
-	var account models.Account
-	err := a.DB.QueryRow("SELECT id, document_number, amount FROM accounts WHERE id = $1", id).Scan(&account.ID, &account.DocumentNumber, &account.Amount)
+func (a *AccountRepository) GetByID(ctx context.Context, id int64) (models.AccountInterface, error) {
+	tx, err := a.DB.BeginTx(ctx, nil)
 	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+
+	var account models.Account
+	err = a.DB.QueryRowContext(ctx, "SELECT id, document_number FROM accounts WHERE id = $1", id).Scan(&account.ID, &account.DocumentNumber)
+	if err == sql.ErrNoRows {
+		return nil, models.ErrAccountNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	if err := tx.Commit(); err != nil {
 		return nil, err
 	}
 
 	return &account, nil
 }
 
-func (a *AccountRepository) Create(account models.AccountInterface) (models.AccountInterface, error) {
+func (a *AccountRepository) GetByDocumentNumber(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
+	tx, err := a.DB.BeginTx(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+
+	var account models.Account
+	err = a.DB.QueryRowContext(ctx, "SELECT id, document_number FROM accounts WHERE document_number = $1", documentNumber).Scan(&account.ID, &account.DocumentNumber)
+	if err == sql.ErrNoRows {
+		return nil, models.ErrAccountNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
+
+	return &account, nil
+}
+
+func (a *AccountRepository) Create(ctx context.Context, account models.AccountInterface) (models.AccountInterface, error) {
+	tx, err := a.DB.BeginTx(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
 	var id int64
-	err := a.DB.QueryRow("INSERT INTO accounts (document_number, amount) VALUES ($1, $2) RETURNING id", account.GetDocumentNumber(), account.GetAmount()).Scan(&id)
+	err = a.DB.QueryRowContext(ctx, "INSERT INTO accounts (document_number) VALUES ($1) RETURNING id", account.GetDocumentNumber()).Scan(&id)
+
 	if err != nil {
 		return nil, err
 	}
 
 	account.SetID(id)
+
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
 
 	return account, nil
 }

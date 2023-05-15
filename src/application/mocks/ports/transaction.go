@@ -5,6 +5,7 @@
 package mock_ports
 
 import (
+	context "context"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
@@ -35,18 +36,56 @@ func (m *MockITransactionWriter) EXPECT() *MockITransactionWriterMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockITransactionWriter) Create(Transaction models.TransactionInterface) (models.TransactionInterface, error) {
+func (m *MockITransactionWriter) Create(ctx context.Context, Transaction models.TransactionInterface) (models.TransactionInterface, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", Transaction)
+	ret := m.ctrl.Call(m, "Create", ctx, Transaction)
 	ret0, _ := ret[0].(models.TransactionInterface)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockITransactionWriterMockRecorder) Create(Transaction interface{}) *gomock.Call {
+func (mr *MockITransactionWriterMockRecorder) Create(ctx, Transaction interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITransactionWriter)(nil).Create), Transaction)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITransactionWriter)(nil).Create), ctx, Transaction)
+}
+
+// MockITransactionReader is a mock of ITransactionReader interface.
+type MockITransactionReader struct {
+	ctrl     *gomock.Controller
+	recorder *MockITransactionReaderMockRecorder
+}
+
+// MockITransactionReaderMockRecorder is the mock recorder for MockITransactionReader.
+type MockITransactionReaderMockRecorder struct {
+	mock *MockITransactionReader
+}
+
+// NewMockITransactionReader creates a new mock instance.
+func NewMockITransactionReader(ctrl *gomock.Controller) *MockITransactionReader {
+	mock := &MockITransactionReader{ctrl: ctrl}
+	mock.recorder = &MockITransactionReaderMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockITransactionReader) EXPECT() *MockITransactionReaderMockRecorder {
+	return m.recorder
+}
+
+// GetBalanceByAccountID mocks base method.
+func (m *MockITransactionReader) GetBalanceByAccountID(ctx context.Context, accountId int64) (float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBalanceByAccountID", ctx, accountId)
+	ret0, _ := ret[0].(float64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBalanceByAccountID indicates an expected call of GetBalanceByAccountID.
+func (mr *MockITransactionReaderMockRecorder) GetBalanceByAccountID(ctx, accountId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalanceByAccountID", reflect.TypeOf((*MockITransactionReader)(nil).GetBalanceByAccountID), ctx, accountId)
 }
 
 // MockITransactionRepository is a mock of ITransactionRepository interface.
@@ -73,16 +112,31 @@ func (m *MockITransactionRepository) EXPECT() *MockITransactionRepositoryMockRec
 }
 
 // Create mocks base method.
-func (m *MockITransactionRepository) Create(Transaction models.TransactionInterface) (models.TransactionInterface, error) {
+func (m *MockITransactionRepository) Create(ctx context.Context, Transaction models.TransactionInterface) (models.TransactionInterface, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", Transaction)
+	ret := m.ctrl.Call(m, "Create", ctx, Transaction)
 	ret0, _ := ret[0].(models.TransactionInterface)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockITransactionRepositoryMockRecorder) Create(Transaction interface{}) *gomock.Call {
+func (mr *MockITransactionRepositoryMockRecorder) Create(ctx, Transaction interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITransactionRepository)(nil).Create), Transaction)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockITransactionRepository)(nil).Create), ctx, Transaction)
+}
+
+// GetBalanceByAccountID mocks base method.
+func (m *MockITransactionRepository) GetBalanceByAccountID(ctx context.Context, accountId int64) (float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBalanceByAccountID", ctx, accountId)
+	ret0, _ := ret[0].(float64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBalanceByAccountID indicates an expected call of GetBalanceByAccountID.
+func (mr *MockITransactionRepositoryMockRecorder) GetBalanceByAccountID(ctx, accountId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalanceByAccountID", reflect.TypeOf((*MockITransactionRepository)(nil).GetBalanceByAccountID), ctx, accountId)
 }

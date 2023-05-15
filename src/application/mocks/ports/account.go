@@ -5,6 +5,7 @@
 package mock_ports
 
 import (
+	context "context"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
@@ -34,19 +35,34 @@ func (m *MockIAccountReader) EXPECT() *MockIAccountReaderMockRecorder {
 	return m.recorder
 }
 
-// GetByID mocks base method.
-func (m *MockIAccountReader) GetByID(id int64) (models.AccountInterface, error) {
+// GetByDocumentNumber mocks base method.
+func (m *MockIAccountReader) GetByDocumentNumber(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByID", id)
+	ret := m.ctrl.Call(m, "GetByDocumentNumber", ctx, documentNumber)
+	ret0, _ := ret[0].(models.AccountInterface)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByDocumentNumber indicates an expected call of GetByDocumentNumber.
+func (mr *MockIAccountReaderMockRecorder) GetByDocumentNumber(ctx, documentNumber interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByDocumentNumber", reflect.TypeOf((*MockIAccountReader)(nil).GetByDocumentNumber), ctx, documentNumber)
+}
+
+// GetByID mocks base method.
+func (m *MockIAccountReader) GetByID(ctx context.Context, id int64) (models.AccountInterface, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetByID", ctx, id)
 	ret0, _ := ret[0].(models.AccountInterface)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetByID indicates an expected call of GetByID.
-func (mr *MockIAccountReaderMockRecorder) GetByID(id interface{}) *gomock.Call {
+func (mr *MockIAccountReaderMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockIAccountReader)(nil).GetByID), id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockIAccountReader)(nil).GetByID), ctx, id)
 }
 
 // MockIAccountWriter is a mock of IAccountWriter interface.
@@ -73,33 +89,18 @@ func (m *MockIAccountWriter) EXPECT() *MockIAccountWriterMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockIAccountWriter) Create(account models.AccountInterface) (models.AccountInterface, error) {
+func (m *MockIAccountWriter) Create(ctx context.Context, account models.AccountInterface) (models.AccountInterface, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", account)
+	ret := m.ctrl.Call(m, "Create", ctx, account)
 	ret0, _ := ret[0].(models.AccountInterface)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockIAccountWriterMockRecorder) Create(account interface{}) *gomock.Call {
+func (mr *MockIAccountWriterMockRecorder) Create(ctx, account interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockIAccountWriter)(nil).Create), account)
-}
-
-// UpdateAmount mocks base method.
-func (m *MockIAccountWriter) UpdateAmount(id, amount int64) (models.AccountInterface, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateAmount", id, amount)
-	ret0, _ := ret[0].(models.AccountInterface)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UpdateAmount indicates an expected call of UpdateAmount.
-func (mr *MockIAccountWriterMockRecorder) UpdateAmount(id, amount interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAmount", reflect.TypeOf((*MockIAccountWriter)(nil).UpdateAmount), id, amount)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockIAccountWriter)(nil).Create), ctx, account)
 }
 
 // MockIAccountRepository is a mock of IAccountRepository interface.
@@ -126,46 +127,46 @@ func (m *MockIAccountRepository) EXPECT() *MockIAccountRepositoryMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockIAccountRepository) Create(account models.AccountInterface) (models.AccountInterface, error) {
+func (m *MockIAccountRepository) Create(ctx context.Context, account models.AccountInterface) (models.AccountInterface, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", account)
+	ret := m.ctrl.Call(m, "Create", ctx, account)
 	ret0, _ := ret[0].(models.AccountInterface)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Create indicates an expected call of Create.
-func (mr *MockIAccountRepositoryMockRecorder) Create(account interface{}) *gomock.Call {
+func (mr *MockIAccountRepositoryMockRecorder) Create(ctx, account interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockIAccountRepository)(nil).Create), account)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockIAccountRepository)(nil).Create), ctx, account)
+}
+
+// GetByDocumentNumber mocks base method.
+func (m *MockIAccountRepository) GetByDocumentNumber(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetByDocumentNumber", ctx, documentNumber)
+	ret0, _ := ret[0].(models.AccountInterface)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByDocumentNumber indicates an expected call of GetByDocumentNumber.
+func (mr *MockIAccountRepositoryMockRecorder) GetByDocumentNumber(ctx, documentNumber interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByDocumentNumber", reflect.TypeOf((*MockIAccountRepository)(nil).GetByDocumentNumber), ctx, documentNumber)
 }
 
 // GetByID mocks base method.
-func (m *MockIAccountRepository) GetByID(id int64) (models.AccountInterface, error) {
+func (m *MockIAccountRepository) GetByID(ctx context.Context, id int64) (models.AccountInterface, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByID", id)
+	ret := m.ctrl.Call(m, "GetByID", ctx, id)
 	ret0, _ := ret[0].(models.AccountInterface)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetByID indicates an expected call of GetByID.
-func (mr *MockIAccountRepositoryMockRecorder) GetByID(id interface{}) *gomock.Call {
+func (mr *MockIAccountRepositoryMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockIAccountRepository)(nil).GetByID), id)
-}
-
-// UpdateAmount mocks base method.
-func (m *MockIAccountRepository) UpdateAmount(id, amount int64) (models.AccountInterface, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateAmount", id, amount)
-	ret0, _ := ret[0].(models.AccountInterface)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UpdateAmount indicates an expected call of UpdateAmount.
-func (mr *MockIAccountRepositoryMockRecorder) UpdateAmount(id, amount interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAmount", reflect.TypeOf((*MockIAccountRepository)(nil).UpdateAmount), id, amount)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockIAccountRepository)(nil).GetByID), ctx, id)
 }

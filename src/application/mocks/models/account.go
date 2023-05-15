@@ -33,18 +33,18 @@ func (m *MockAccountInterface) EXPECT() *MockAccountInterfaceMockRecorder {
 	return m.recorder
 }
 
-// GetAmount mocks base method.
-func (m *MockAccountInterface) GetAmount() int64 {
+// GetBalance mocks base method.
+func (m *MockAccountInterface) GetBalance() float64 {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetAmount")
-	ret0, _ := ret[0].(int64)
+	ret := m.ctrl.Call(m, "GetBalance")
+	ret0, _ := ret[0].(float64)
 	return ret0
 }
 
-// GetAmount indicates an expected call of GetAmount.
-func (mr *MockAccountInterfaceMockRecorder) GetAmount() *gomock.Call {
+// GetBalance indicates an expected call of GetBalance.
+func (mr *MockAccountInterfaceMockRecorder) GetBalance() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAmount", reflect.TypeOf((*MockAccountInterface)(nil).GetAmount))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalance", reflect.TypeOf((*MockAccountInterface)(nil).GetBalance))
 }
 
 // GetDocumentNumber mocks base method.
@@ -89,16 +89,16 @@ func (mr *MockAccountInterfaceMockRecorder) IsValid() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsValid", reflect.TypeOf((*MockAccountInterface)(nil).IsValid))
 }
 
-// SetAmount mocks base method.
-func (m *MockAccountInterface) SetAmount(arg0 int64) {
+// SetBalance mocks base method.
+func (m *MockAccountInterface) SetBalance(arg0 float64) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetAmount", arg0)
+	m.ctrl.Call(m, "SetBalance", arg0)
 }
 
-// SetAmount indicates an expected call of SetAmount.
-func (mr *MockAccountInterfaceMockRecorder) SetAmount(arg0 interface{}) *gomock.Call {
+// SetBalance indicates an expected call of SetBalance.
+func (mr *MockAccountInterfaceMockRecorder) SetBalance(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetAmount", reflect.TypeOf((*MockAccountInterface)(nil).SetAmount), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetBalance", reflect.TypeOf((*MockAccountInterface)(nil).SetBalance), arg0)
 }
 
 // SetID mocks base method.

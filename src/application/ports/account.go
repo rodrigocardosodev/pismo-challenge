@@ -1,15 +1,18 @@
 package ports
 
 import (
+	"context"
+
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 )
 
 type IAccountReader interface {
-	GetByID(id int64) (models.AccountInterface, error)
+	GetByID(ctx context.Context, id int64) (models.AccountInterface, error)
+	GetByDocumentNumber(ctx context.Context, documentNumber string) (models.AccountInterface, error)
 }
 
 type IAccountWriter interface {
-	Create(account models.AccountInterface) (models.AccountInterface, error)
+	Create(ctx context.Context, account models.AccountInterface) (models.AccountInterface, error)
 }
 
 type IAccountRepository interface {

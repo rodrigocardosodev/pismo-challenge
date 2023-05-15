@@ -7,6 +7,16 @@ https://alistair.cockburn.us/hexagonal-architecture
 # Como rodar o projeto?
 **Antes de tudo, garanta que na sua máquina tenha o docker instalado.**
 
+Segue as variaveis ambiente para rodar o projeto:
+```
+PG_HOST=
+PG_PORT=
+PG_USER=
+PG_PASSWORD=
+PG_DATABASE=
+
+```
+
 Para rodar o projeto basta executar o seguinte comando:
 ```bash
 make run-dev

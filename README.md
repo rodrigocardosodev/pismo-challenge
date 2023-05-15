@@ -62,8 +62,9 @@ make test
 ├── go.mod
 ├── go.sum
 ├── migrations
-│   ├── 20230512120315_create_transaction_table.sql
-│   └── 20230512202028_create_trigger_transaction_table.sql
+│   ├── 20230515180138_create_account_table.sql
+│   ├── 20230515180516_create_transaction_table.sql
+│   └── 20230515180558_create_transaction_trigger.sql
 └── src
     ├── adapters
     │   ├── database

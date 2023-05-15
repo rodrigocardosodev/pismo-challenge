@@ -24,11 +24,14 @@ type AccountInterface interface {
 	GetDocumentNumber() string
 	SetID(int64)
 	IsValid() error
+	SetBalance(float64)
+	GetBalance() float64
 }
 
 type Account struct {
-	ID             int64  `json:"id" valid:"-"`
-	DocumentNumber string `json:"document_number" valid:"required"`
+	ID             int64   `json:"id" valid:"-"`
+	DocumentNumber string  `json:"document_number" valid:"required"`
+	Balance        float64 `json:"balance,omitempty" valid:"-"`
 }
 
 func (a *Account) GetID() int64 {
@@ -50,6 +53,14 @@ func (a *Account) IsValid() error {
 	}
 
 	return nil
+}
+
+func (a *Account) SetBalance(balance float64) {
+	a.Balance = balance
+}
+
+func (a *Account) GetBalance() float64 {
+	return a.Balance
 }
 
 func NewAccount(documentNumber string) AccountInterface {

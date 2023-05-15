@@ -39,6 +39,30 @@ func (a *TransactionRepository) Create(ctx context.Context, transaction models.T
 	return transaction, nil
 }
 
+func (a *TransactionRepository) GetBalanceByAccountID(ctx context.Context, accountId int64) (float64, error) {
+	tx, err := a.DB.BeginTx(ctx, nil)
+	if err != nil {
+		return 0, err
+	}
+	defer tx.Rollback()
+
+	var sumAmount float64
+	err = a.DB.QueryRowContext(ctx, "SELECT COALESCE(SUM(amount), 0) FROM transactions WHERE account_id = $1", accountId).Scan(&sumAmount)
+	if err == sql.ErrNoRows {
+		return 0, models.ErrAccountNotFound
+	}
+
+	if err != nil {
+		return 0, err
+	}
+
+	if err = tx.Commit(); err != nil {
+		return 0, err
+	}
+
+	return sumAmount, nil
+}
+
 func NewTransactionRepository(db *sql.DB) ports.ITransactionRepository {
 	return &TransactionRepository{
 		DB: db,

@@ -79,6 +79,15 @@ func createAccount(db *sql.DB) {
 	stmt.Exec()
 }
 
+func createTransaction(db *sql.DB) {
+	query := `INSERT INTO transactions (account_id, operation_id, amount) VALUES (1, 1, 1000);`
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	stmt.Exec()
+}
+
 func createTransactionTrigger(db *sql.DB) {
 	query := `CREATE TRIGGER verify_account_before_insert
 						BEFORE INSERT ON transactions
@@ -116,4 +125,18 @@ func TestTransactionRepository_Create(t *testing.T) {
 	require.Nil(t, result)
 	require.NotNil(t, err)
 	require.Equal(t, "account not found", err.Error())
+}
+
+func TestTransactionRepository_GetBalanceByAccountID(t *testing.T) {
+	setUp()
+	createAccount(transactionDb)
+	createTransaction(transactionDb)
+	defer tearDown(transactionDb)
+	ctx := context.Background()
+
+	transactionDb := database.NewTransactionRepository(transactionDb)
+
+	result, err := transactionDb.GetBalanceByAccountID(ctx, 1)
+	require.Nil(t, err)
+	require.Equal(t, 1000.0, result)
 }

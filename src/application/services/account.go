@@ -10,17 +10,18 @@ import (
 )
 
 type AccountService struct {
-	AccountRepository ports.IAccountRepository
+	AccountRepository     ports.IAccountRepository
+	TransactionRepository ports.ITransactionRepository
 }
 
 type IAccountService interface {
 	Create(ctx context.Context, documentNumber string) (models.AccountInterface, error)
 	GetByID(ctx context.Context, id int64) (models.AccountInterface, error)
-	IsValidCPF(cpf string) error
+	GetAccountBalance(ctx context.Context, accountID int64) (models.AccountInterface, error)
 }
 
 func (a *AccountService) Create(ctx context.Context, documentNumber string) (models.AccountInterface, error) {
-	err := a.IsValidCPF(documentNumber)
+	err := a.isValidCPF(documentNumber)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +48,23 @@ func (a *AccountService) GetByID(ctx context.Context, id int64) (models.AccountI
 	return a.AccountRepository.GetByID(ctx, id)
 }
 
-func (a *AccountService) IsValidCPF(cpf string) error {
+func (a *AccountService) GetAccountBalance(ctx context.Context, accountID int64) (models.AccountInterface, error) {
+	account, err := a.AccountRepository.GetByID(ctx, accountID)
+	if err != nil {
+		return nil, err
+	}
+
+	balance, err := a.TransactionRepository.GetBalanceByAccountID(ctx, accountID)
+	if err != nil {
+		return nil, err
+	}
+
+	account.SetBalance(balance)
+
+	return account, nil
+}
+
+func (a *AccountService) isValidCPF(cpf string) error {
 	cpf = strings.ReplaceAll(cpf, ".", "")
 	cpf = strings.ReplaceAll(cpf, "-", "")
 
@@ -102,8 +119,9 @@ func (a *AccountService) calculateDigit(cpf string) byte {
 	return byte(11 - remainder + '0')
 }
 
-func NewAccountService(accountRepository ports.IAccountRepository) IAccountService {
+func NewAccountService(accountRepository ports.IAccountRepository, transactionRepository ports.ITransactionRepository) IAccountService {
 	return &AccountService{
-		AccountRepository: accountRepository,
+		AccountRepository:     accountRepository,
+		TransactionRepository: transactionRepository,
 	}
 }

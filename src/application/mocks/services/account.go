@@ -50,6 +50,21 @@ func (mr *MockIAccountServiceMockRecorder) Create(ctx, documentNumber interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockIAccountService)(nil).Create), ctx, documentNumber)
 }
 
+// GetAccountBalance mocks base method.
+func (m *MockIAccountService) GetAccountBalance(ctx context.Context, accountID int64) (models.AccountInterface, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAccountBalance", ctx, accountID)
+	ret0, _ := ret[0].(models.AccountInterface)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAccountBalance indicates an expected call of GetAccountBalance.
+func (mr *MockIAccountServiceMockRecorder) GetAccountBalance(ctx, accountID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAccountBalance", reflect.TypeOf((*MockIAccountService)(nil).GetAccountBalance), ctx, accountID)
+}
+
 // GetByID mocks base method.
 func (m *MockIAccountService) GetByID(ctx context.Context, id int64) (models.AccountInterface, error) {
 	m.ctrl.T.Helper()
@@ -63,18 +78,4 @@ func (m *MockIAccountService) GetByID(ctx context.Context, id int64) (models.Acc
 func (mr *MockIAccountServiceMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockIAccountService)(nil).GetByID), ctx, id)
-}
-
-// IsValidCPF mocks base method.
-func (m *MockIAccountService) IsValidCPF(cpf string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IsValidCPF", cpf)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// IsValidCPF indicates an expected call of IsValidCPF.
-func (mr *MockIAccountServiceMockRecorder) IsValidCPF(cpf interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsValidCPF", reflect.TypeOf((*MockIAccountService)(nil).IsValidCPF), cpf)
 }

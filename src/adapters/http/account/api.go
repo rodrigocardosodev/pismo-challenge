@@ -55,3 +55,28 @@ func (svc *HTTPAccountAdapter) GetAccountById(c *gin.Context) {
 
 	c.JSON(200, account)
 }
+
+func (svc *HTTPAccountAdapter) GetAccountBalance(c *gin.Context) {
+	var accountBalanceResponse dtos.AccountBalanceResponse
+	accountID := c.Param("account_id")
+	parsedAccountID, err := strconv.ParseInt(accountID, 10, 64)
+	if err != nil {
+		c.JSON(400, gin.H{"error": "invalid account id"})
+		return
+	}
+	account, err := svc.service.GetAccountBalance(c, parsedAccountID)
+	if err == models.ErrAccountNotFound {
+		c.JSON(404, gin.H{"error": err.Error()})
+		return
+	}
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	accountBalanceResponse.ID = account.GetID()
+	accountBalanceResponse.Balance = account.GetBalance()
+	accountBalanceResponse.DocumentNumber = account.GetDocumentNumber()
+
+	c.JSON(200, accountBalanceResponse)
+}

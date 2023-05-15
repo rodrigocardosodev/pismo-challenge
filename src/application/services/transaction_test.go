@@ -19,7 +19,7 @@ func TestTransactionService_Create(t *testing.T) {
 
 	transaction := mock_models.NewMockTransactionInterface(ctrl)
 	repository := mock_ports.NewMockITransactionRepository(ctrl)
-	repository.EXPECT().Create(ctx, gomock.Any()).Return(transaction, nil)
+	repository.EXPECT().Create(ctx, gomock.Any()).Return(transaction, nil).AnyTimes()
 
 	service := services.NewTransactionService(repository)
 
@@ -35,9 +35,4 @@ func TestTransactionService_Create(t *testing.T) {
 	require.NotNil(t, err)
 	require.Nil(t, result)
 	require.Equal(t, "invalid operation type", err.Error())
-
-	result, err = service.Create(ctx, 1, models.PAGAMENTO, -1000)
-	require.NotNil(t, err)
-	require.Nil(t, result)
-	require.Equal(t, "invalid amount", err.Error())
 }

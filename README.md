@@ -1,8 +1,12 @@
 # Desafio PISMO
 
 Esta é uma aplicação que faz parte do processo admissional da **PISMO**, nela iremos realizar a criação da conta do cliente e realizar transações na sua conta
+Nela estaremos aplicando a arquitetura hexagonal proposta pelo Alistair Cockburn.
+https://alistair.cockburn.us/hexagonal-architecture
 
 # Como rodar o projeto?
+**Antes de tudo, garanta que na sua máquina tenha o docker instalado.**
+
 Para rodar o projeto basta executar o seguinte comando:
 ```bash
 make run-dev
@@ -98,13 +102,13 @@ make test
 
 # Ideias para melhoria da aplicação
 - Criar documentação da API usando OpenAPI Redoc
-- Criar um serviço de consulta de saldo
+- Usar o NGINX como load balancer
+- Implementar o pattern CQRS para separar as responsabilidades de leitura e escrita usando redis para cache
 - Criar um serviço que realize de maneira mais efetiva o pagamento parcelado
 - Criar um serviço de notificação para o cliente
 - Criar o pattern saga para garantir a consistência das transações
   1. Criar serviço de compensação para caso ocorra falha na transação
-- Criar um serviço de autenticação/autorização para o cliente
 - Melhorar as estruturas de dados que comportam as informações de amount da transação
   1. Retirar o ponto flutuante e utilizar inteiros não negativos (uint64) para maior precisão
   2. Utilizar o pattern decimal para maior precisão
-- Realizar deploy em nuvem publica usando ou o (Serverless Framework ou AWS SAM)
+- Realizar deploy em nuvem publica usando IaaC (Serverless Framework ou AWS SAM)

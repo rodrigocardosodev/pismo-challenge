@@ -33,13 +33,13 @@ func main() {
 	}
 	defer db.Close()
 
-	accountRepository := userDatabase.NewAccountRepository(db)
-	accountService := services.NewAccountService(accountRepository)
-	accountRoutes := userHTTP.NewHTTPAccountAdapter(accountService)
-
 	transactionRepository := transactionDatabase.NewTransactionRepository(db)
 	transactionService := services.NewTransactionService(transactionRepository)
 	transactionRoutes := transactionHTTP.NewHTTPTransactionAdapter(transactionService)
+
+	accountRepository := userDatabase.NewAccountRepository(db)
+	accountService := services.NewAccountService(accountRepository, transactionRepository)
+	accountRoutes := userHTTP.NewHTTPAccountAdapter(accountService)
 
 	router := gin.New()
 	router.Use(gin.Logger())
@@ -48,6 +48,8 @@ func main() {
 
 	router.POST("/accounts", accountRoutes.CreateAccount)
 	router.GET("/accounts/:account_id", accountRoutes.GetAccountById)
+	router.GET("/accounts/:account_id/balance", accountRoutes.GetAccountBalance)
+
 	router.POST("/transactions", transactionRoutes.CreateTransaction)
 
 	router.Run(":8080")

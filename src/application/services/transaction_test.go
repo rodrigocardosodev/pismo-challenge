@@ -35,4 +35,20 @@ func TestTransactionService_Create(t *testing.T) {
 	require.NotNil(t, err)
 	require.Nil(t, result)
 	require.Equal(t, "invalid operation type", err.Error())
+
+	result, err = service.Create(ctx, 1, models.SAQUE, 1000)
+	require.NotNil(t, err)
+	require.Nil(t, result)
+
+	result, err = service.Create(ctx, 1, models.COMPRA_A_VISTA, 1000)
+	require.NotNil(t, err)
+	require.Nil(t, result)
+
+	result, err = service.Create(ctx, 1, models.COMPRA_PARCELADA, 1000)
+	require.NotNil(t, err)
+	require.Nil(t, result)
+
+	result, err = service.Create(ctx, 1, models.PAGAMENTO, -1000)
+	require.NotNil(t, err)
+	require.Nil(t, result)
 }

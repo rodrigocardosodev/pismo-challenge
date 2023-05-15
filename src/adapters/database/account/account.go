@@ -44,6 +44,7 @@ func (a *AccountRepository) GetByDocumentNumber(ctx context.Context, documentNum
 
 	var account models.Account
 	err = a.DB.QueryRowContext(ctx, "SELECT id, document_number FROM accounts WHERE document_number = $1", documentNumber).Scan(&account.ID, &account.DocumentNumber)
+
 	if err == sql.ErrNoRows {
 		return nil, models.ErrAccountNotFound
 	}

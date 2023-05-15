@@ -30,16 +30,32 @@ func (t *TransactionService) Create(ctx context.Context, accountId int64, operat
 	}
 
 	switch operationId {
-	case models.SAQUE & models.COMPRA_A_VISTA & models.COMPRA_PARCELADA:
-		transaction.SetAmount(amount)
 	case models.COMPRA_A_VISTA:
-		transaction.SetAmount(amount)
+		if amount < 0 {
+			transaction.SetAmount(amount)
+		} else {
+			return nil, models.ErrInvalidAmountByOperationType
+		}
 	case models.COMPRA_PARCELADA:
-		transaction.SetAmount(amount)
+		if amount < 0 {
+			transaction.SetAmount(amount)
+		} else {
+			return nil, models.ErrInvalidAmountByOperationType
+		}
+	case models.SAQUE:
+		if amount < 0 {
+			transaction.SetAmount(amount)
+		} else {
+			return nil, models.ErrInvalidAmountByOperationType
+		}
 	case models.PAGAMENTO:
-		transaction.SetAmount(amount)
+		if amount > 0 {
+			transaction.SetAmount(amount)
+		} else {
+			return nil, models.ErrInvalidAmountByOperationType
+		}
 	default:
-		return nil, models.ErrInvalidOperation
+		return nil, models.ErrInvalidOperationType
 	}
 
 	transaction, err = t.TransactionRepository.Create(ctx, transaction)

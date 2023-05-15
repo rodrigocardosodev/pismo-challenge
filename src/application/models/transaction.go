@@ -14,7 +14,8 @@ const (
 )
 
 var (
-	ErrInvalidOperation = errors.New("invalid operation type")
+	ErrInvalidOperationType         = errors.New("invalid operation type")
+	ErrInvalidAmountByOperationType = errors.New("invalid amount by operation type")
 )
 
 func init() {

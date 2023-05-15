@@ -1,6 +1,8 @@
 package transaction
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/dtos"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
@@ -18,23 +20,23 @@ func NewHTTPTransactionAdapter(service services.ITrasactionService) *HTTPTransac
 func (svc *HTTPTransactionAdapter) CreateTransaction(c *gin.Context) {
 	var transactionRequest dtos.TransactionRequest
 	if err := c.ShouldBindJSON(&transactionRequest); err != nil {
-		c.JSON(400, gin.H{"error": "invalid json"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid json"})
 		return
 	}
 	account, err := svc.service.Create(c, transactionRequest.AccountID, transactionRequest.OperationTypeID, transactionRequest.Amount)
-	if err == models.ErrInvalidOperation {
-		c.JSON(400, gin.H{"error": err.Error()})
+	if err == models.ErrInvalidOperationType || err == models.ErrInvalidAmountByOperationType {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	if err == models.ErrAccountNotFound {
-		c.JSON(404, gin.H{"error": err.Error()})
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 
 	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(201, account)
+	c.JSON(http.StatusCreated, account)
 }

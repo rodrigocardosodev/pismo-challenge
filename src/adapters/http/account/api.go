@@ -1,6 +1,7 @@
 package account
 
 import (
+	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -20,40 +21,40 @@ func NewHTTPAccountAdapter(service services.IAccountService) *HTTPAccountAdapter
 func (svc *HTTPAccountAdapter) CreateAccount(c *gin.Context) {
 	var accountRequest dtos.AccountRequest
 	if err := c.ShouldBindJSON(&accountRequest); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	account, err := svc.service.Create(c, accountRequest.DocumentNumber)
 	if err == models.ErrCpfMustHaveOnlyDigits || err == models.ErrCpfMustHave11Digits || err == models.ErrInvalidCpf || err == models.ErrAccountAlreadyExists {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(201, account)
+	c.JSON(http.StatusCreated, account)
 }
 
 func (svc *HTTPAccountAdapter) GetAccountById(c *gin.Context) {
 	accountID := c.Param("account_id")
 	parsedAccountID, err := strconv.ParseInt(accountID, 10, 64)
 	if err != nil {
-		c.JSON(400, gin.H{"error": "invalid account id"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid account id"})
 		return
 	}
 	account, err := svc.service.GetByID(c, parsedAccountID)
 	if err == models.ErrAccountNotFound {
-		c.JSON(404, gin.H{"error": err.Error()})
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(200, account)
+	c.JSON(http.StatusOK, account)
 }
 
 func (svc *HTTPAccountAdapter) GetAccountBalance(c *gin.Context) {
@@ -61,16 +62,16 @@ func (svc *HTTPAccountAdapter) GetAccountBalance(c *gin.Context) {
 	accountID := c.Param("account_id")
 	parsedAccountID, err := strconv.ParseInt(accountID, 10, 64)
 	if err != nil {
-		c.JSON(400, gin.H{"error": "invalid account id"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid account id"})
 		return
 	}
 	account, err := svc.service.GetAccountBalance(c, parsedAccountID)
 	if err == models.ErrAccountNotFound {
-		c.JSON(404, gin.H{"error": err.Error()})
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -78,5 +79,5 @@ func (svc *HTTPAccountAdapter) GetAccountBalance(c *gin.Context) {
 	accountBalanceResponse.Balance = account.GetBalance()
 	accountBalanceResponse.DocumentNumber = account.GetDocumentNumber()
 
-	c.JSON(200, accountBalanceResponse)
+	c.JSON(http.StatusOK, accountBalanceResponse)
 }

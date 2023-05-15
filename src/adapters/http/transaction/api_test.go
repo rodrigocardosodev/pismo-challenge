@@ -58,6 +58,7 @@ func TestHTTPTransactionAdapter_CreateTransaction(t *testing.T) {
 		router.ServeHTTP(responseWriter, httpRequest)
 
 		require.Equal(t, http.StatusNotFound, responseWriter.Code)
+		require.Equal(t, `{"error":"account not found"}`, responseWriter.Body.String())
 	})
 
 	t.Run("Error invalid operation type CreateTransaction", func(t *testing.T) {
@@ -67,7 +68,7 @@ func TestHTTPTransactionAdapter_CreateTransaction(t *testing.T) {
 		gin.SetMode(gin.TestMode)
 		router := gin.Default()
 		router.POST("/transactions", adapter.CreateTransaction)
-		service.EXPECT().Create(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, models.ErrInvalidOperation).AnyTimes()
+		service.EXPECT().Create(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, models.ErrInvalidOperationType).AnyTimes()
 
 		requestBody := strings.NewReader(`{"account_id": 1, "operation_type_id": 5, "amount": 1000}`)
 		httpRequest := httptest.NewRequest(http.MethodPost, "/transactions", requestBody)
@@ -77,6 +78,25 @@ func TestHTTPTransactionAdapter_CreateTransaction(t *testing.T) {
 		router.ServeHTTP(responseWriter, httpRequest)
 
 		require.Equal(t, http.StatusBadRequest, responseWriter.Code)
+		require.Equal(t, `{"error":"invalid operation type"}`, responseWriter.Body.String())
+	})
+
+	t.Run("Error invalid amount CreateTransaction", func(t *testing.T) {
+		service := mock_services.NewMockITrasactionService(ctrl)
+		adapter := http_transaction.NewHTTPTransactionAdapter(service)
+		gin.SetMode(gin.TestMode)
+		router := gin.Default()
+		router.POST("/transactions", adapter.CreateTransaction)
+		service.EXPECT().Create(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, models.ErrInvalidAmountByOperationType).AnyTimes()
+
+		requestBody := strings.NewReader(`{"account_id": 1, "operation_type_id": 1, "amount": 0}`)
+		httpRequest := httptest.NewRequest(http.MethodPost, "/transactions", requestBody)
+		httpRequest.Header.Set("Content-Type", "application/json")
+
+		responseWriter := httptest.NewRecorder()
+		router.ServeHTTP(responseWriter, httpRequest)
+		require.Equal(t, http.StatusBadRequest, responseWriter.Code)
+		require.Equal(t, `{"error":"invalid amount by operation type"}`, responseWriter.Body.String())
 	})
 
 	t.Run("Error default in CreateTransaction", func(t *testing.T) {

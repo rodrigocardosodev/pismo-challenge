@@ -6,7 +6,7 @@ import (
 	"log"
 	"testing"
 
-	_ "github.com/mattn/go-sqlite3" // Import SQLite3 driver
+	_ "github.com/mattn/go-sqlite3"
 
 	database "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/transaction"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"

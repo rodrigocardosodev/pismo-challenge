@@ -13,7 +13,6 @@ import (
 	transactionHTTP "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/transaction"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/services"
 
-	// import postgres driver
 	_ "github.com/lib/pq"
 	_ "github.com/rodrigocardosodev/pismo-challenge/docs"
 	swaggerFiles "github.com/swaggo/files"

@@ -9,8 +9,8 @@ import (
 	userDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/account"
 	transactionDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/transaction"
 
-	userHTTP "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/account"
-	transactionHTTP "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/transaction"
+	userHTTPAdapter "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/account"
+	transactionHTTPAdapter "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/transaction"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/services"
 
 	_ "github.com/lib/pq"
@@ -49,11 +49,11 @@ func main() {
 
 	transactionRepository := transactionDatabase.NewTransactionRepository(db)
 	transactionService := services.NewTransactionService(transactionRepository)
-	transactionRoutes := transactionHTTP.NewHTTPTransactionAdapter(transactionService)
+	transactionRoutes := transactionHTTPAdapter.NewHTTPTransactionAdapter(transactionService)
 
 	accountRepository := userDatabase.NewAccountRepository(db)
 	accountService := services.NewAccountService(accountRepository, transactionRepository)
-	accountRoutes := userHTTP.NewHTTPAccountAdapter(accountService)
+	accountRoutes := userHTTPAdapter.NewHTTPAccountAdapter(accountService)
 
 	router := gin.New()
 	router.Use(gin.Logger())

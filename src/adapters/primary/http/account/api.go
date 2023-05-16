@@ -34,7 +34,7 @@ func NewHTTPAccountAdapter(service services.IAccountService) *HTTPAccountAdapter
 func (svc *HTTPAccountAdapter) CreateAccount(c *gin.Context) {
 	var accountRequest dtos.AccountRequest
 	if err := c.ShouldBindJSON(&accountRequest); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": models.ErrInvalidBodyAccount.Error()})
 		return
 	}
 	account, err := svc.service.Create(c, accountRequest.DocumentNumber)
@@ -67,7 +67,7 @@ func (svc *HTTPAccountAdapter) GetAccountById(c *gin.Context) {
 	accountID := c.Param("account_id")
 	parsedAccountID, err := strconv.ParseInt(accountID, 10, 64)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid account id"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": models.ErrInvalidAccountID.Error()})
 		return
 	}
 	account, err := svc.service.GetByID(c, parsedAccountID)
@@ -101,7 +101,7 @@ func (svc *HTTPAccountAdapter) GetAccountBalance(c *gin.Context) {
 	accountID := c.Param("account_id")
 	parsedAccountID, err := strconv.ParseInt(accountID, 10, 64)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid account id"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": models.ErrInvalidAccountID.Error()})
 		return
 	}
 	account, err := svc.service.GetAccountBalance(c, parsedAccountID)

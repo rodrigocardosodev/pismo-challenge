@@ -12,7 +12,7 @@ type TransactionService struct {
 }
 
 type ITrasactionService interface {
-	Create(ctx context.Context, accountId int64, operationId int8, amount float64) (models.TransactionInterface, error)
+	Create(ctx context.Context, accountId int64, operationId uint8, amount float64) (models.TransactionInterface, error)
 }
 
 func NewTransactionService(transactionRepository ports.ITransactionRepository) ITrasactionService {
@@ -21,7 +21,7 @@ func NewTransactionService(transactionRepository ports.ITransactionRepository) I
 	}
 }
 
-func (t *TransactionService) Create(ctx context.Context, accountId int64, operationId int8, amount float64) (models.TransactionInterface, error) {
+func (t *TransactionService) Create(ctx context.Context, accountId int64, operationId uint8, amount float64) (models.TransactionInterface, error) {
 
 	transaction := models.NewTransaction(accountId, operationId, amount)
 	err := transaction.IsValid()

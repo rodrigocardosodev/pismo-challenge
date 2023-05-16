@@ -41,6 +41,25 @@ func TestHTTPTransactionAdapter_CreateTransaction(t *testing.T) {
 		require.Equal(t, http.StatusCreated, responseWriter.Code)
 	})
 
+	t.Run("Error invalid body CreateTransaction", func(t *testing.T) {
+		service := mock_services.NewMockITrasactionService(ctrl)
+
+		adapter := http_transaction.NewHTTPTransactionAdapter(service)
+		gin.SetMode(gin.TestMode)
+		router := gin.Default()
+		router.POST("/transactions", adapter.CreateTransaction)
+
+		requestBody := strings.NewReader(`"account_id": 1, "operation_type_id": 1, "amount": 1000}`)
+		httpRequest := httptest.NewRequest(http.MethodPost, "/transactions", requestBody)
+		httpRequest.Header.Set("Content-Type", "application/json")
+
+		responseWriter := httptest.NewRecorder()
+		router.ServeHTTP(responseWriter, httpRequest)
+
+		require.Equal(t, http.StatusBadRequest, responseWriter.Code)
+		require.Equal(t, `{"error":"invalid request body transaction"}`, responseWriter.Body.String())
+	})
+
 	t.Run("Error account not exists CreateTransaction", func(t *testing.T) {
 		service := mock_services.NewMockITrasactionService(ctrl)
 

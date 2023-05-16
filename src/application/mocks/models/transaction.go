@@ -76,10 +76,10 @@ func (mr *MockTransactionInterfaceMockRecorder) GetID() *gomock.Call {
 }
 
 // GetOperationTypeId mocks base method.
-func (m *MockTransactionInterface) GetOperationTypeId() int8 {
+func (m *MockTransactionInterface) GetOperationTypeId() uint8 {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetOperationTypeId")
-	ret0, _ := ret[0].(int8)
+	ret0, _ := ret[0].(uint8)
 	return ret0
 }
 
@@ -140,7 +140,7 @@ func (mr *MockTransactionInterfaceMockRecorder) SetID(arg0 interface{}) *gomock.
 }
 
 // SetOperationTypeId mocks base method.
-func (m *MockTransactionInterface) SetOperationTypeId(arg0 int8) {
+func (m *MockTransactionInterface) SetOperationTypeId(arg0 uint8) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "SetOperationTypeId", arg0)
 }

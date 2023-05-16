@@ -62,6 +62,13 @@ func TestAccountService_Create(t *testing.T) {
 		require.Equal(t, "invalid cpf", err.Error())
 	})
 
+	t.Run("should return only digits error", func(t *testing.T) {
+		result, err := service.Create(ctx, "9569405708a")
+		require.NotNil(t, err)
+		require.Nil(t, result)
+		require.Equal(t, "cpf must have only digits", err.Error())
+	})
+
 	t.Run("should return account already exists error", func(t *testing.T) {
 		accountRepository.EXPECT().GetByDocumentNumber(ctx, gomock.Any()).Return(account, nil)
 		result, err := service.Create(ctx, "95694057082")

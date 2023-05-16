@@ -9,6 +9,8 @@ import (
 var (
 	ErrAccountNotFound      = errors.New("account not found")
 	ErrAccountAlreadyExists = errors.New("account already exists")
+	ErrInvalidAccountID     = errors.New("invalid account id")
+	ErrInvalidBodyAccount   = errors.New("invalid request body account")
 
 	ErrCpfMustHave11Digits   = errors.New("cpf must have 11 digits")
 	ErrCpfMustHaveOnlyDigits = errors.New("cpf must have only digits")

@@ -16,6 +16,7 @@ const (
 var (
 	ErrInvalidOperationType         = errors.New("invalid operation type")
 	ErrInvalidAmountByOperationType = errors.New("invalid amount by operation type")
+	ErrInvalidBodyTransaction       = errors.New("invalid request body transaction")
 )
 
 func init() {
@@ -25,10 +26,10 @@ func init() {
 type TransactionInterface interface {
 	GetID() int64
 	GetAccountID() int64
-	GetOperationTypeId() int8
+	GetOperationTypeId() uint8
 	GetAmount() float64
 	SetID(int64)
-	SetOperationTypeId(int8)
+	SetOperationTypeId(uint8)
 	SetAmount(float64)
 	SetEventDate(string)
 	IsValid() error
@@ -37,7 +38,7 @@ type TransactionInterface interface {
 type Transaction struct {
 	ID              int64   `json:"id" valid:"-"`
 	AccountId       int64   `json:"account_id" valid:"required"`
-	OperationTypeId int8    `json:"operation_type_id" valid:"required,numeric"`
+	OperationTypeId uint8   `json:"operation_type_id" valid:"required,numeric"`
 	Amount          float64 `json:"amount" valid:"required"`
 	EventDate       string  `json:"event_date" valid:"-"`
 }
@@ -50,7 +51,7 @@ func (t *Transaction) GetAccountID() int64 {
 	return t.AccountId
 }
 
-func (t *Transaction) GetOperationTypeId() int8 {
+func (t *Transaction) GetOperationTypeId() uint8 {
 	return t.OperationTypeId
 }
 
@@ -62,7 +63,7 @@ func (t *Transaction) SetAmount(amount float64) {
 	t.Amount = amount
 }
 
-func (t *Transaction) SetOperationTypeId(operationTypeId int8) {
+func (t *Transaction) SetOperationTypeId(operationTypeId uint8) {
 	t.OperationTypeId = operationTypeId
 }
 
@@ -83,7 +84,7 @@ func (t *Transaction) IsValid() error {
 	return nil
 }
 
-func NewTransaction(accountId int64, operationId int8, amount float64) TransactionInterface {
+func NewTransaction(accountId int64, operationId uint8, amount float64) TransactionInterface {
 	return &Transaction{
 		AccountId:       accountId,
 		OperationTypeId: operationId,

@@ -8,7 +8,7 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
-	database "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/transaction"
+	database "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/postgres/transaction"
 	"github.com/rodrigocardosodev/pismo-challenge/src/application/models"
 	"github.com/stretchr/testify/require"
 )

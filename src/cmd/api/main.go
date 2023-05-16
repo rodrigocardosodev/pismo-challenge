@@ -33,11 +33,11 @@ import (
 // @BasePath	/
 func main() {
 	var (
-		DB_HOST     = os.Getenv("PG_HOST")
-		DB_PORT     = os.Getenv("PG_PORT")
-		DB_USER     = os.Getenv("PG_USER")
-		DB_PASSWORD = os.Getenv("PG_PASSWORD")
-		DB_DATABASE = os.Getenv("PG_DATABASE")
+		DB_HOST     = os.Getenv("POSTGRES_HOST")
+		DB_PORT     = os.Getenv("POSTGRES_PORT")
+		DB_USER     = os.Getenv("POSTGRES_USER")
+		DB_PASSWORD = os.Getenv("POSTGRES_PASSWORD")
+		DB_DATABASE = os.Getenv("POSTGRES_DB")
 	)
 
 	strConn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE)

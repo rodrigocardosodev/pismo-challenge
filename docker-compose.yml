@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: app
     volumes:
       - .:/go/src/app
     ports:
@@ -14,8 +15,10 @@ services:
 
     
   pismo-migrations:
-    image: gomicro/goose
-    command: goose postgres "host=pismo-challenge-db user=postgres password=postgres dbname=challenge-db sslmode=disable" up
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrations
     volumes:
       - ./migrations/:/migrations
     env_file:
@@ -28,7 +31,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - .db.env
+      - .app.env
     networks:
       - default
     volumes:

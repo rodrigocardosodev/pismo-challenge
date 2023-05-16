@@ -9,11 +9,11 @@ https://alistair.cockburn.us/hexagonal-architecture
 
 Segue as variaveis ambiente para rodar o projeto:
 ```
-PG_HOST=
-PG_PORT=
-PG_USER=
-PG_PASSWORD=
-PG_DATABASE=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+POSTGRES_PORT=
+POSTGRES_HOST=
 ```
 
 Para rodar o projeto basta executar o seguinte comando:

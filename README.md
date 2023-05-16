@@ -68,31 +68,39 @@ make integration-test
 │   ├── architecture.drawio
 │   └── architecture.png
 ├── docker-compose.yml
+├── docs
+│   ├── docs.go
+│   ├── swagger.json
+│   └── swagger.yaml
 ├── go.mod
 ├── go.sum
 ├── migrations
 │   ├── 20230515180138_create_account_table.sql
 │   ├── 20230515180516_create_transaction_table.sql
 │   └── 20230515180558_create_transaction_trigger.sql
+├── pismo-challenge.postman_collection.json
 └── src
     ├── adapters
-    │   ├── database
-    │   │   ├── account
-    │   │   │   ├── account.go
-    │   │   │   └── account_test.go
-    │   │   └── transaction
-    │   │       ├── transaction.go
-    │   │       └── transaction_test.go
-    │   └── http
-    │       ├── account
-    │       │   ├── api.go
-    │       │   └── api_test.go
-    │       └── transaction
-    │           ├── api.go
-    │           └── api_test.go
+    │   ├── primary
+    │   │   └── http
+    │   │       ├── account
+    │   │       │   ├── api.go
+    │   │       │   └── api_test.go
+    │   │       └── transaction
+    │   │           ├── api.go
+    │   │           └── api_test.go
+    │   └── secondary
+    │       └── database
+    │           ├── account
+    │           │   ├── account.go
+    │           │   └── account_test.go
+    │           └── transaction
+    │               ├── transaction.go
+    │               └── transaction_test.go
     ├── application
     │   ├── dtos
     │   │   ├── account.go
+    │   │   ├── error.go
     │   │   └── transaction.go
     │   ├── mocks
     │   │   ├── models

@@ -91,12 +91,13 @@ make integration-test
     │   │           └── api_test.go
     │   └── secondary
     │       └── database
-    │           ├── account
-    │           │   ├── account.go
-    │           │   └── account_test.go
-    │           └── transaction
-    │               ├── transaction.go
-    │               └── transaction_test.go
+    │           └── postgres
+    │               ├── account
+    │               │   ├── account.go
+    │               │   └── account_test.go
+    │               └── transaction
+    │                   ├── transaction.go
+    │                   └── transaction_test.go
     ├── application
     │   ├── dtos
     │   │   ├── account.go

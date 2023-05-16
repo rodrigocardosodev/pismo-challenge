@@ -128,14 +128,3 @@ make integration-test
         └── api
             └── main.go
 ```
-
-# Ideias para melhoria da aplicação
-- Implementar o pattern CQRS para separar as responsabilidades de leitura e escrita usando redis para cache
-- Criar um serviço que realize de maneira mais efetiva o pagamento parcelado
-- Criar um serviço de notificação para o cliente
-- Criar o pattern saga para garantir a consistência das transações
-  1. Criar serviço de compensação para caso ocorra falha na transação
-- Melhorar as estruturas de dados que comportam as informações de amount da transação
-  1. Retirar o ponto flutuante e utilizar inteiros não negativos (uint64) para maior precisão
-  2. Utilizar o pattern decimal para maior precisão
-- Realizar deploy em nuvem publica usando IaaC (Serverless Framework ou AWS SAM)

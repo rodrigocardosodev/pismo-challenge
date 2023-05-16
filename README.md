@@ -25,6 +25,9 @@ Caso deseje derrubar os conteineres levantandos pelo comando acima, basta execut
 make stop-dev
 ```
 
+# Documentação da API
+A documentação da API foi feita usando o swagger, para acessar a documentação basta acessar, com a aplicação em execução, o seguinte link: http://localhost:8080/swagger/index.html
+
 # Como rodar os testes?
 Os comandos para execução de testes estão separados entre os testes unitários e os testes de integração.
 

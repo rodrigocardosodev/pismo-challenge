@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	userDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/account"
-	transactionDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/transaction"
+	userDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/postgres/account"
+	transactionDatabase "github.com/rodrigocardosodev/pismo-challenge/src/adapters/secondary/database/postgres/transaction"
 
 	userHTTPAdapter "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/account"
 	transactionHTTPAdapter "github.com/rodrigocardosodev/pismo-challenge/src/adapters/primary/http/transaction"

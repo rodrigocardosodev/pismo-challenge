@@ -39,7 +39,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/pismo-challenge:latest
+          tags: ${{ steps.login-ecr.outputs.registry }}/pismo-challenge
 
       - name: Install and configure AWS CLI
         run: |
